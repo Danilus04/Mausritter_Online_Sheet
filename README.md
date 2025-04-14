@@ -1,5 +1,7 @@
 # Mausritter_Online_Sheet
 
-Mausritter é um RPG de mesa leve e acessível, onde os jogadores assumem o papel de ratos aventureiros em um mundo cheio de perigos. Este projeto tem como finalidade facilitar a criação, edição e gerenciamento das fichas de personagem, substituindo as fichas em papel por uma alternativa digital, prática e acessível.
+Este projeto tem como objetivo o desenvolvimento de um Gerenciador de Fichas de Personagem para o RPG Mausritter, como parte das atividades da disciplina de Engenharia de Software.
+O Mausritter é um RPG de mesa com regras simples e componentes compactos. Este gerenciador digital foi pensado para facilitar o registro e acompanhamento das informações dos personagens durante as sessões de jogo.
+A aplicação permite criar, editar e armazenar fichas de forma prática e acessível, substituindo as fichas físicas e contribuindo para uma organização mais eficiente. O sistema busca refletir fielmente a estrutura original das fichas do Mausritter, com suporte a atributos, inventário, magias, equipamentos e condições do personagem.
 
-
+# Configuração do ambiente 
