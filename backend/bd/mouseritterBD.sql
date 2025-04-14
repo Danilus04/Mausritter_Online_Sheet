@@ -78,7 +78,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Square` (
   `damage2Square` VARCHAR(45) NULL,
   `valueArmorSquare` VARCHAR(45) NULL,
   `conditionEffectSquare` VARCHAR(45) NULL,
-  PRIMARY KEY (`idSquare`))
+  `User_idUser` INT NOT NULL,
+  PRIMARY KEY (`idSquare`),
+  INDEX `fk_Square_User1_idx` (`User_idUser` ASC) VISIBLE,
+  CONSTRAINT `fk_Square_User1`
+    FOREIGN KEY (`User_idUser`)
+    REFERENCES `mydb`.`User` (`idUser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
