@@ -1,0 +1,47 @@
+.item-square {
+  border: 2px solid black;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.item-name {
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-weight: bold;
+  padding: 4px;
+  background-color: white;
+  font-size: 0.9rem;
+}
+
+.item-usage {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+}
+
+.usage-dot {
+  width: 15px;
+  height: 15px;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+.item-image {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-image img {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.sem-imagem {
+  font-style: italic;
+  color: gray;
+}

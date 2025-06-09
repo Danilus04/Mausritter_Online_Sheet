@@ -1,36 +1,43 @@
-  // src/components/items.jsx
-  function Item({ item }) {
-    const {
-      nameSquare,
-      imageSquare,
-      typeSquare,
-      damage1Square,
-      usageTypeSquare,
-      valueArmorSquare
-    } = item
+import './items.css'
 
-    return (
-      <div className="item-card" style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem' }}>
-        <h3>{nameSquare}</h3>
+function Item({ item }) {
+  const {
+    nameSquare,
+    widthSquare,
+    heightSquare,
+    imageSquare,
+    maxUsageSquare,
+    currentUsageSquare,
+  } = item
 
-        {imageSquare ? (
-          <img src={imageSquare} alt={nameSquare} style={{ maxWidth: '100px' }} />
-        ) : (
-          <p><em>Sem imagem</em></p>
-        )}
+  const widthPx = widthSquare * 150
+  const heightPx = heightSquare * 150
 
-        {typeSquare === 'arma' && (
-          <>
-            <p><strong>Dano:</strong> {damage1Square || 'N/A'}</p>
-            <p><strong>Tipo:</strong> {usageTypeSquare || 'N/A'}</p>
-          </>
-        )}
-
-        {typeSquare === 'armadura' && (
-          <p><strong>Defesa:</strong> {valueArmorSquare}</p>
-        )}
-      </div>
+  // Cria bolinhas de uso
+  const usos = []
+  for (let i = 0; i < maxUsageSquare; i++) {
+    usos.push(
+      <div
+        key={i}
+        className="usage-dot"
+        style={{ backgroundColor: i < currentUsageSquare ? 'black' : 'white' }}
+      ></div>
     )
   }
 
-  export default Item
+  return (
+    <div className="item-square" style={{ width: widthPx, height: heightPx }}>
+      <div className="item-name">{nameSquare}</div>
+      <div className="item-usage">{usos}</div>
+      <div className="item-image">
+        {imageSquare ? (
+          <img src={imageSquare} alt={nameSquare} />
+        ) : (
+          <span className="sem-imagem">[Sem imagem]</span>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default Item
