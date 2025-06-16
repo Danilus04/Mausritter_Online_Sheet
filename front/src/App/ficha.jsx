@@ -1,6 +1,6 @@
 // src/App/ficha.jsx
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import api from '../apiAcess'
 import Item from '../components/items'
 
 
@@ -10,7 +10,7 @@ function Ficha() {
   const [erro, setErro] = useState(null)
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/items/')
+    api.get('/items/')
       .then(response => {
         setItens(response.data)
         setLoading(false)
