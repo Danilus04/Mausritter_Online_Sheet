@@ -11,5 +11,5 @@ class UserItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserItem 
-        fields = ['id', 'item_base', 'quantity', 'currentUsageSquare', 'id', 'item_base']  # Adicione outros campos conforme necessário
+        fields = ['id', 'item_base', 'quantity', 'currentUsageSquare', 'id', 'item_base', 'PositionX', 'PositionY']  # Adicione outros campos conforme necessário
         #read_only_fields = ['id', 'item_base']  # Se não quiser que esses campos sejam editáveis
