@@ -20,3 +20,7 @@ class UserItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
     #def get_queryset(self):
     #    user = self.request.user
     #    return UserItem.objects.filter(user=user)  # Filtra os itens do usuário autenticado
+
+class UserItemListCreateAPIView(generics.ListCreateAPIView):
+    queryset = UserItem.objects.all()
+    serializer_class = UserItemSerializer
