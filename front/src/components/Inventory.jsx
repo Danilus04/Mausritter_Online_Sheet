@@ -18,18 +18,6 @@ function Inventory({ items, gridWidth, gridHeight }) {
   const handleDrop = (e, targetX, targetY) => {
     if (!draggingItem) return;
 
-    const updatedItems = localItems.map((it) => {
-      if (it === draggingItem) {
-        return { ...it, positionX: targetX, positionY: targetY };
-      }
-      return it;
-    });
-
-    setLocalItems(updatedItems);
-    setDraggingItem(null);
-
-    // ====> Espaço para atualizar no backend:
-    //console.log(draggingItem)
     api.put(`/user/items/${draggingItem.id}/`, {
       PositionX: targetX,
       PositionY: targetY,
@@ -37,11 +25,23 @@ function Inventory({ items, gridWidth, gridHeight }) {
     })
       .then(response => {
         console.log('Posição atualizada com sucesso:', response.data);
+
+        const updatedItems = localItems.map((it) => {
+          if (it === draggingItem) {
+            return { ...it, positionX: targetX, positionY: targetY };
+          }
+          return it;
+        });
+
+        setLocalItems(updatedItems);
+        setDraggingItem(null);
       })
       .catch(error => {
         console.error('Erro ao atualizar posição:', error);
+        setDraggingItem(null);
       });
   };
+
 
   // Gera as células do grid para receber drops
   const gridCells = [];
