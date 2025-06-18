@@ -1,6 +1,6 @@
 import './items.css'
 
-function Item({ item }) {
+function Item({ item, onDragStart, onDragOver, onDrop }) {
   const {
     nameSquare,
     widthSquare,
@@ -8,15 +8,14 @@ function Item({ item }) {
     imageSquare,
     maxUsageSquare,
     currentUsageSquare,
-    positionX = null,
-    positionY = null,
-  } = item
+    positionX,
+    positionY,
+  } = item;
 
-  const widthPx = widthSquare * 150
-  const heightPx = heightSquare * 150
+  const widthPx = widthSquare * 150;
+  const heightPx = heightSquare * 150;
 
-  // Cria bolinhas de uso
-  const usos = []
+  const usos = [];
   for (let i = 0; i < maxUsageSquare; i++) {
     usos.push(
       <div
@@ -24,11 +23,18 @@ function Item({ item }) {
         className="usage-dot"
         style={{ backgroundColor: i < currentUsageSquare ? 'black' : 'white' }}
       ></div>
-    )
+    );
   }
 
   return (
-    <div className="item-square" style={{ width: widthPx, height: heightPx }}>
+    <div
+      className="item-square"
+      style={{ width: widthPx, height: heightPx }}
+      draggable
+      onDragStart={(e) => onDragStart(e, item)}
+      onDragOver={(e) => onDragOver(e)}
+      onDrop={(e) => onDrop(e, item)}
+    >
       <div className="item-name">{nameSquare}</div>
       <div className="item-usage">{usos}</div>
       <div className="item-image">
@@ -39,7 +45,8 @@ function Item({ item }) {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default Item
+export default Item;
+

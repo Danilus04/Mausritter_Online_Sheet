@@ -45,3 +45,11 @@
   font-style: italic;
   color: gray;
 }
+
+.grid-cell {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.item-square {
+  cursor: grab;
+}
