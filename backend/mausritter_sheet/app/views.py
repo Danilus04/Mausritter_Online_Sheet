@@ -12,7 +12,7 @@ class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
-# Endpoint: GET /user/items/<id>/, POST /user/items/<id>/, DELETE /items/<id>/<id>/
+# Endpoint: GET /user/items/<id>/, POST /user/items/<id>/, DELETE /user/items/<id>/
 class UserItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserItem.objects.all()  # Aqui você deve usar o modelo correto para UserItem
     serializer_class = UserItemSerializer  # Use o serializer correto para UserItem
