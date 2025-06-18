@@ -42,7 +42,7 @@ const Teste = () => {
     return (
         <div>
             <h2>Custom Grid Display</h2>
-            <Inventory items={mappedItems} gridWidth={5} gridHeight={5} />
+            <Inventory items={mappedItems} gridWidth={5} gridHeight={2} />
         </div>
     );
 };

@@ -1,6 +1,6 @@
-import './items.css'
+import './items.css';
 
-function Item({ item, onDragStart, onDragOver, onDrop }) {
+function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd }) {
   const {
     nameSquare,
     widthSquare,
@@ -8,8 +8,6 @@ function Item({ item, onDragStart, onDragOver, onDrop }) {
     imageSquare,
     maxUsageSquare,
     currentUsageSquare,
-    positionX,
-    positionY,
   } = item;
 
   const widthPx = widthSquare * 150;
@@ -34,6 +32,7 @@ function Item({ item, onDragStart, onDragOver, onDrop }) {
       onDragStart={(e) => onDragStart(e, item)}
       onDragOver={(e) => onDragOver(e)}
       onDrop={(e) => onDrop(e, item)}
+      onDragEnd={onDragEnd}
     >
       <div className="item-name">{nameSquare}</div>
       <div className="item-usage">{usos}</div>
@@ -49,4 +48,3 @@ function Item({ item, onDragStart, onDragOver, onDrop }) {
 }
 
 export default Item;
-
