@@ -1,6 +1,7 @@
 import Item from './items';
 import './inventory.css';
 import { useState } from 'react';
+import api from '../apiAcess'; // Importa sua instância de API
 
 function Inventory({ items, gridWidth, gridHeight }) {
   const [localItems, setLocalItems] = useState(items);
@@ -17,7 +18,6 @@ function Inventory({ items, gridWidth, gridHeight }) {
   const handleDrop = (e, targetX, targetY) => {
     if (!draggingItem) return;
 
-    // Atualiza a posição do item arrastado
     const updatedItems = localItems.map((it) => {
       if (it === draggingItem) {
         return { ...it, positionX: targetX, positionY: targetY };
@@ -27,6 +27,20 @@ function Inventory({ items, gridWidth, gridHeight }) {
 
     setLocalItems(updatedItems);
     setDraggingItem(null);
+
+    // ====> Espaço para atualizar no backend:
+    //console.log(draggingItem)
+    api.put(`/user/items/${draggingItem.id}/`, {
+      PositionX: targetX,
+      PositionY: targetY,
+      user: draggingItem.user,
+    })
+      .then(response => {
+        console.log('Posição atualizada com sucesso:', response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao atualizar posição:', error);
+      });
   };
 
   // Gera as células do grid para receber drops

@@ -25,6 +25,8 @@ const Teste = () => {
 
     // Transforma os dados da API no formato esperado pelo Inventory
     const mappedItems = itens.map(item => ({
+        id: item.id,
+        user: item.user,
         nameSquare: item.item_base.nameSquare,
         widthSquare: item.item_base.widthSquare,
         heightSquare: item.item_base.heightSquare,
