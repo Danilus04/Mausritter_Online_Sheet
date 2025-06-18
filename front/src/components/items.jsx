@@ -8,6 +8,8 @@ function Item({ item }) {
     imageSquare,
     maxUsageSquare,
     currentUsageSquare,
+    positionX = null,
+    positionY = null,
   } = item
 
   const widthPx = widthSquare * 150

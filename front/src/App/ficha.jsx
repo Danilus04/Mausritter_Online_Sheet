@@ -10,7 +10,7 @@ function Ficha() {
   const [erro, setErro] = useState(null)
 
   useEffect(() => {
-    api.get('/items/')
+    api.get('/item/')
       .then(response => {
         setItens(response.data)
         setLoading(false)
