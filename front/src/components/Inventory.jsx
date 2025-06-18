@@ -19,6 +19,22 @@ function Inventory({ items, gridWidth, gridHeight }) {
   const handleDrop = (e, targetX, targetY) => {
     if (!draggingItem) return;
 
+    // Verificação de limite de grid
+    const itemWidth = draggingItem.widthSquare;
+    const itemHeight = draggingItem.heightSquare;
+
+    const isOutOfBounds =
+      targetX < 0 ||
+      targetY < 0 ||
+      targetX + itemWidth > gridWidth ||
+      targetY + itemHeight > gridHeight;
+
+    if (isOutOfBounds) {
+      console.warn('Item não pode ser posicionado fora dos limites do grid.');
+      setDraggingItem(null);
+      return; // Cancela o drop
+    }
+
     api.put(`/user/items/${draggingItem.id}/`, {
       PositionX: targetX,
       PositionY: targetY,
