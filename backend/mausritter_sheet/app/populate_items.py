@@ -12,7 +12,7 @@ sys.path.append(BASE_DIR)  # Adiciona ao sys.path
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mausritter_sheet.settings')
 django.setup()
-from models import Item
+from app.models import Item
 
 
 nomes = ["Espada de Ferro", "Escudo de Carvalho", "Poção de Vida", "Arco Longo", "Machado Anão"]
@@ -20,7 +20,7 @@ cores = ["vermelho", "azul", "verde", "preto", "branco"]
 tipos = ["arma", "armadura", "consumível", "mágico", "raro"]
 
 for i in range(20):
-    item = Item(
+    item = Item.objects.create(
         nameSquare=random.choice(nomes),
         colorSquare=random.choice(cores),
         widthSquare=random.randint(1, 3),
