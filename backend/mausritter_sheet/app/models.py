@@ -10,7 +10,7 @@ class Item(models.Model):
     descriptionSquare = models.TextField(blank=True, null=True)
     effectDescription = models.TextField(blank=True, null=True)
     typeSquare = models.CharField(max_length=45, blank=True, null=True)
-    imageSquare = models.TextField(blank=True, null=True)  # você pode trocar para URLField se quiser
+    imageSquare = models.ImageField(upload_to='images/itens/', blank=True, null=True) 
     worthSquare = models.IntegerField(blank=True, null=True)
     currentUsageSquare = models.IntegerField(blank=True, null=True)
     maxUsageSquare = models.IntegerField(blank=True, null=True)
