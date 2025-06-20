@@ -1,6 +1,7 @@
 import './items.css';
 
-function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd }) {
+// Adicione a prop 'onClick' aqui
+function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick }) {
   const {
     nameSquare,
     widthSquare,
@@ -33,6 +34,8 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd }) {
       onDragOver={(e) => onDragOver(e)}
       onDrop={(e) => onDrop(e, item)}
       onDragEnd={onDragEnd}
+      // Adicione o evento de clique aqui
+      onClick={onClick}
     >
       <div className="item-name">{nameSquare}</div>
       <div className="item-usage">{usos}</div>

@@ -53,3 +53,31 @@
 .item-square {
   cursor: grab;
 }
+
+/* --- NOVO: Efeito de Destaque ao Passar o Mouse --- */
+
+/* Define o estado base do item.
+  A 'transition' faz com que qualquer mudança na propriedade 'transform' 
+  seja suave e animada, em vez de instantânea.
+*/
+.item-square {
+  /* ... suas outras regras como border, position, etc. continuam aqui ... */
+  transition: transform 0.2s ease-in-out;
+  position: relative; /* Garante que o z-index funcione */
+  z-index: 1; /* Padrão de empilhamento */
+}
+
+/*
+  Define o que acontece quando o mouse está EM CIMA do item.
+*/
+.item-square:hover {
+  /* Aumenta o item em 5%. Você pode mudar para 1.1 para 10%, etc.
+    Isso NÃO afeta o layout dos outros itens.
+  */
+  transform: scale(1.05);
+  
+  /* Aumenta o z-index para garantir que o item destacado fique "por cima" 
+    dos seus vizinhos e não seja cortado por eles.
+  */
+  z-index: 10;
+}
