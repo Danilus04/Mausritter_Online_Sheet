@@ -19,25 +19,72 @@ function ItensDefault() {
   const handleDragEnd = () => {};
 
   useEffect(() => {
-    api.get('/item/')
-      .then(response => {
-        const formattedData = response.data.map(d => ({
-          ...d,
-          nameSquare: d.nameSquare || 'Item sem nome',
-          widthSquare: d.widthSquare || 1,
-          heightSquare: d.heightSquare || 1,
-          maxUsageSquare: d.maxUsageSquare || 0,
-          currentUsageSquare: d.currentUsageSquare || 0,
-          imageSquare: d.imageSquare || null,
-        }));
-        setItens(formattedData);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Erro ao buscar itens:", error);
-        setErro("Erro ao carregar os itens.");
-        setLoading(false);
+    // Array com os nomes dos arquivos que queremos buscar
+    const filesToFetch = ['/ItensDefault/armor.db', '/ItensDefault/conditions.db', '/ItensDefault/gear.db', '/ItensDefault/spells.db', '/ItensDefault/weapons.db'];
+
+    // Função para processar o conteúdo de um arquivo
+    const processFileData = (textData) => {
+      const lines = textData.split('\n').filter(line => line.trim() !== '');
+      return lines.map(line => {
+        const d = JSON.parse(line);
+        const prefixoIncorreto = 'systems/mausritter/images/icons/';
+        let caminhoCorrigido = null;
+        let path = null;
+
+        if (d.img && typeof d.img === 'string') {
+          caminhoCorrigido = d.img.replace(prefixoIncorreto, '');
+          path = 'ItensDefault/' + caminhoCorrigido;
+        }
+
+        return {
+          // Adicionamos um ID único baseado no nome e tipo, para evitar problemas na renderização
+          idSquare: `${d.type}-${d.name}`,
+          nameSquare: d.name || 'Item sem nome',
+          widthSquare: d.data?.size?.width || 1,
+          heightSquare: d.data?.size?.height || 1,
+          descriptionSquare: d.data?.description || '',
+          effectDescription: d.effects || '',
+          typeSquare: d.type || '',
+          imageSquare: path || null,
+          worthSquare: d.data?.cost || 0,
+          currentUsageSquare: d.data?.pips?.value || 0,
+          maxUsageSquare: d.data?.pips?.max || 0,
+          tagSquare: d.data?.tag || 0,
+          damage1Square: d.data?.weapon?.dm1 || 0,
+          damage2Square: d.data?.weapon?.dm2 || 0,
+          valueArmor: d.data?.armor?.value || 0,
+          conditionEffectSquare: d.data?.desc || 0,
+          usageTypeSquare: d.data?.clear || 0,
+          isMagical: d.data?.isSpell || false,
+          pesoSquare: d.data?.weight || 0,
+        };
       });
+    };
+
+    // Usamos Promise.all para buscar todos os arquivos em paralelo
+    Promise.all(
+      filesToFetch.map(file =>
+        fetch(file).then(response => {
+          if (!response.ok) {
+            throw new Error(`Não foi possível encontrar o arquivo ${file}`);
+          }
+          return response.text();
+        })
+      )
+    )
+    .then(allFilesTextData => {
+      // O 'allFilesTextData' é um array com o conteúdo de cada arquivo
+      // Processamos cada um e unificamos os resultados
+      const allItems = allFilesTextData.flatMap(textData => processFileData(textData));
+      setItens(allItems);
+    })
+    .catch(error => {
+      console.error("Erro ao buscar ou processar os arquivos de itens:", error);
+      setErro("Erro ao carregar os itens.");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
   }, []);
   
   useEffect(() => {
