@@ -2,13 +2,12 @@
 
 import './App.css'
 import Ficha from './App/ficha'  // Importa o componente Ficha
-import Teste from './App/teste'
+import CreateItem from './App/fichacreate'
 
 function App() {
   return (
     <>
-      <h1>Teste do componente Ficha</h1>
-      <Teste/>  {/* Renderiza o componente aqui */}
+      <CreateItem/>  {/* Renderiza o componente aqui */}
     </>
   )
 }
