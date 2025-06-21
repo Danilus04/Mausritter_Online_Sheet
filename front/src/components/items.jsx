@@ -1,8 +1,8 @@
 import './items.css';
 
 // Adicione a prop 'onClick' aqui
-function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick }) {
-  const {
+function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellSize = 150, style }) {
+ const {
     nameSquare,
     widthSquare,
     heightSquare,
@@ -11,8 +11,15 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick }) {
     currentUsageSquare,
   } = item;
 
-  const widthPx = widthSquare * 150;
-  const heightPx = heightSquare * 150;
+  const widthPx = widthSquare * cellSize;
+  const heightPx = heightSquare * cellSize;
+
+  const defaultStyle = {
+    width: widthPx,
+    height: heightPx,
+  };
+
+  const finalStyle = style ? style : defaultStyle;
 
   const usos = [];
   for (let i = 0; i < maxUsageSquare; i++) {
@@ -28,13 +35,12 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick }) {
   return (
     <div
       className="item-square"
-      style={{ width: widthPx, height: heightPx }}
+      style={finalStyle}
       draggable
-      onDragStart={(e) => onDragStart(e, item)}
-      onDragOver={(e) => onDragOver(e)}
-      onDrop={(e) => onDrop(e, item)}
+      onDragStart={(e) => onDragStart && onDragStart(e, item)}
+      onDragOver={(e) => onDragOver && onDragOver(e)}
+      onDrop={(e) => onDrop && onDrop(e, item)}
       onDragEnd={onDragEnd}
-      // Adicione o evento de clique aqui
       onClick={onClick}
     >
       <div className="item-name">{nameSquare}</div>

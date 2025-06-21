@@ -115,10 +115,24 @@ function ItensDefault() {
     });
   };
 
+  const CELL_SIZE = 150;
+
   const containerStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: `repeat(auto-fill, ${CELL_SIZE}px)`,
+    gridAutoRows: `${CELL_SIZE}px`,
+    gridAutoFlow: 'dense',
+    gap: 0,
+    width: '100%',
   };
+
+  const getItemStyle = (item) => ({
+    gridColumnEnd: `span ${item.widthSquare}`,
+    gridRowEnd: `span ${item.heightSquare}`,
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+  });
 
   if (erro) return <p>{erro}</p>;
   if (loading) return <p>Carregando itens...</p>;
@@ -132,6 +146,8 @@ function ItensDefault() {
             <Item
               key={item.idSquare}
               item={item}
+              cellSize={150}
+              style={getItemStyle(item)}
               onDragStart={(e) => handleDragStart(e, item)}
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, item)}
