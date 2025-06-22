@@ -1,8 +1,7 @@
 import './items.css';
 
-// Adicione a prop 'onClick' aqui
 function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellSize = 150, style }) {
- const {
+  const {
     nameSquare,
     widthSquare,
     heightSquare,
@@ -21,8 +20,10 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
 
   const finalStyle = style ? style : defaultStyle;
 
+const maxUsos = Math.min(maxUsageSquare, 9); // Limita no máximo 9
+
   const usos = [];
-  for (let i = 0; i < maxUsageSquare; i++) {
+  for (let i = 0; i < maxUsos; i++) {
     usos.push(
       <div
         key={i}
@@ -44,13 +45,17 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
       onClick={onClick}
     >
       <div className="item-name">{nameSquare}</div>
-      <div className="item-usage">{usos}</div>
-      <div className="item-image">
-        {imageSquare ? (
-          <img src={imageSquare} alt={nameSquare} />
-        ) : (
-          <span className="sem-imagem">[Sem imagem]</span>
-        )}
+      <div className="item-image-wrapper">
+        <div className="item-usage">
+          {usos}
+        </div>
+        <div className="item-image">
+          {imageSquare ? (
+            <img src={imageSquare} alt={nameSquare}/>
+          ) : (
+            <span className="sem-imagem">[Sem imagem]</span>
+          )}
+        </div>
       </div>
     </div>
   );

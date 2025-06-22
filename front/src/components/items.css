@@ -1,15 +1,17 @@
 .item-square {
+  border: 1px solid #666;
+  box-sizing: border-box;
+  background-color: #ddd;
+  overflow: hidden;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   overflow: hidden;
-  border: 2px solid black;
   cursor: grab;
   transition: transform 0.2s ease-in-out;
   position: relative;
-  z-index: 1;
 }
 
 .item-name {
@@ -21,68 +23,44 @@
   font-size: 0.9rem;
 }
 
+
+.item-image-wrapper {
+  position: relative;
+  width: 80%;
+}
+
+
 .item-usage {
-  display: flex;
-  gap: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, auto); /* Máximo de 3 por linha */
+  gap: 2px;
   padding: 4px;
+  z-index: 2;
+  position: absolute;
 }
 
 .usage-dot {
-  width: 15px;
-  height: 15px;
-  border: 2px solid black;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-}
-
-.item-image {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border: 1px solid black;
 }
 
 .item-image img {
-  max-width: 80%;
-  max-height: 80%;
+  max-width: 100%;
 }
 
 .sem-imagem {
   font-style: italic;
-  color: gray;
+  color: #888;
+  font-size: 12px;
 }
 
 .grid-cell {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.item-square {
-  cursor: grab;
-}
-
-/* --- NOVO: Efeito de Destaque ao Passar o Mouse --- */
-
-/* Define o estado base do item.
-  A 'transition' faz com que qualquer mudança na propriedade 'transform' 
-  seja suave e animada, em vez de instantânea.
-*/
-.item-square {
-  /* ... suas outras regras como border, position, etc. continuam aqui ... */
-  transition: transform 0.2s ease-in-out;
-  position: relative; /* Garante que o z-index funcione */
-  z-index: 1; /* Padrão de empilhamento */
-}
-
-/*
-  Define o que acontece quando o mouse está EM CIMA do item.
-*/
 .item-square:hover {
-  /* Aumenta o item em 5%. Você pode mudar para 1.1 para 10%, etc.
-    Isso NÃO afeta o layout dos outros itens.
-  */
   transform: scale(1.05);
-  
-  /* Aumenta o z-index para garantir que o item destacado fique "por cima" 
-    dos seus vizinhos e não seja cortado por eles.
-  */
   z-index: 10;
 }
