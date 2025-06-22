@@ -31,7 +31,7 @@ function Ficha() {
       {itens.length === 0 ? (
         <p>Nenhum item encontrado.</p>
       ) : (
-        itens.map(item => <Item key={item.idSquare} item={item} />)
+        itens.map(item => <Item key={item.idSquare} item={item} cellSize={150}/>)
       )}
     </div>
   )
