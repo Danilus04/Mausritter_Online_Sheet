@@ -28,7 +28,6 @@ class Item(models.Model):
 
     class Meta:
         db_table = 'Square'
-        managed = False  # para não deixar o Django tentar criar ou alterar essa tabela
 
     def __str__(self):
         return self.nameSquare
