@@ -1,15 +1,13 @@
 // src/App.jsx
 
-import './App.css'
-import ItemPageCreate from './App/ItemPageCreate'  // Importa o componente Ficha
-import ItemPageEdit from './App/ItemPageUpdate'
-import api from './apiAcess'
+import './App.css'  
+import Ficha from './App/ficha'
 
 function App() {
   
   return (
     <>
-      <ItemPageEdit item={} />  {/* Renderiza o componente aqui */}
+      <Ficha />  {/* Renderiza o componente aqui */}
     </>
   )
 }
