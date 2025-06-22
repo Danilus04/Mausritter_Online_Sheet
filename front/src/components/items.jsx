@@ -8,6 +8,11 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
     imageSquare,
     maxUsageSquare,
     currentUsageSquare,
+    typeSquare,
+    damage1Square,
+    damage2Square,
+    valueArmorSquare,
+    pesoSquare,
   } = item;
 
   const widthPx = widthSquare * cellSize;
@@ -20,7 +25,7 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
 
   const finalStyle = style ? style : defaultStyle;
 
-const maxUsos = Math.min(maxUsageSquare, 9); // Limita no máximo 9
+  const maxUsos = Math.min(maxUsageSquare || 0, 9); // Limita no máximo 9
 
   const usos = [];
   for (let i = 0; i < maxUsos; i++) {
@@ -28,7 +33,7 @@ const maxUsos = Math.min(maxUsageSquare, 9); // Limita no máximo 9
       <div
         key={i}
         className="usage-dot"
-        style={{ backgroundColor: i < currentUsageSquare ? 'black' : 'white' }}
+        style={{ backgroundColor: i < (currentUsageSquare || 0) ? 'black' : 'white' }}
       ></div>
     );
   }
@@ -49,9 +54,12 @@ const maxUsos = Math.min(maxUsageSquare, 9); // Limita no máximo 9
         <div className="item-usage">
           {usos}
         </div>
+        <div className="item-info-line">
+          {typeSquare || '-'} | {damage1Square || '-'} | {damage2Square || '-'} | {valueArmorSquare || '-'} | {pesoSquare || '-'}
+        </div>
         <div className="item-image">
           {imageSquare ? (
-            <img src={imageSquare} alt={nameSquare}/>
+            <img src={imageSquare} alt={nameSquare} />
           ) : (
             <span className="sem-imagem">[Sem imagem]</span>
           )}
