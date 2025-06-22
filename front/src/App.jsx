@@ -1,13 +1,12 @@
 // src/App.jsx
 
 import './App.css'
-import Ficha from './App/ficha'  // Importa o componente Ficha
-import NewItemPage from './App/fichacreate'
+import ItemPageCreate from './App/ItemPageCreate'  // Importa o componente Ficha
 
 function App() {
   return (
     <>
-      <NewItemPage/>  {/* Renderiza o componente aqui */}
+      <ItemPageCreate/>  {/* Renderiza o componente aqui */}
     </>
   )
 }
