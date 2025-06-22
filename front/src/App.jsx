@@ -2,11 +2,14 @@
 
 import './App.css'
 import ItemPageCreate from './App/ItemPageCreate'  // Importa o componente Ficha
+import ItemPageEdit from './App/ItemPageUpdate'
+import api from './apiAcess'
 
 function App() {
+  
   return (
     <>
-      <ItemPageCreate/>  {/* Renderiza o componente aqui */}
+      <ItemPageEdit item={} />  {/* Renderiza o componente aqui */}
     </>
   )
 }
