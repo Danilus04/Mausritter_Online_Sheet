@@ -1,0 +1,16 @@
+.character-sheet {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.character-sheet h2, h3 {
+  color: #333;
+}
+
+.character-sheet p, li {
+  margin: 5px 0;
+}
