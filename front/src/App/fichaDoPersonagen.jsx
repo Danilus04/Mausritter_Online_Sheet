@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../apiAcess';
-import './CharacterSheetPage.css';  // Arquivo de estilos opcional
+import './FichaDoPersonagem.css';  // Arquivo de estilos opcional
+import CharacterInventory from "../components/CharacterInventory";
 
 function CharacterSheetPage() {
   const { id } = useParams();  // Captura o ID da ficha da URL
@@ -49,6 +50,7 @@ function CharacterSheetPage() {
       <p>Level: {character.levelCharacter}</p>
       <p>XP: {character.xpCharacter}</p>
       <p>Grit: {character.gritCharacter}</p>
+      <CharacterInventory characterId={id} />
     </div>
   );
 }
