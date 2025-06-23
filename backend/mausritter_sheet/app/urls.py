@@ -9,8 +9,10 @@ urlpatterns = [
     
     # CRUD individual de item
     path('characters/items/<int:pk>/', UserItemRetrieveUpdateDestroyAPIView.as_view(), name='user-item-detail'),
-    path('characters/items/', UserItemListCreateAPIView.as_view(), name='user-item-list-create'),
+    
     # Itens de uma ficha específica
+    path('characters/items/', UserItemListCreateAPIView.as_view(), name='user-item-list-create'),
+    
     path('characters/<int:character_id>/items/', CharacterSheetItemsListAPIView.as_view(), name='character-items'),
     
     path('login/', LoginView.as_view(), name='login'),
