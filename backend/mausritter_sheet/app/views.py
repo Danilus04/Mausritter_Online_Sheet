@@ -16,18 +16,20 @@ class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
-# Endpoint: GET /user/items/<id>/, POST /user/items/<id>/, DELETE /user/items/<id>/
 class UserItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserItem.objects.all()  # Aqui você deve usar o modelo correto para UserItem
-    serializer_class = UserItemSerializer  # Use o serializer correto para UserItem
-
-    #def get_queryset(self):
-    #    user = self.request.user
-    #    return UserItem.objects.filter(user=user)  # Filtra os itens do usuário autenticado
+    queryset = UserItem.objects.all()
+    serializer_class = UserItemSerializer
 
 class UserItemListCreateAPIView(generics.ListCreateAPIView):
     queryset = UserItem.objects.all()
     serializer_class = UserItemSerializer
+
+class CharacterSheetItemsListAPIView(generics.ListAPIView):
+    serializer_class = UserItemSerializer
+
+    def get_queryset(self):
+        character_id = self.kwargs['character_id']
+        return UserItem.objects.filter(character_sheet__id=character_id)
 
 class LoginView(APIView):
     def post(self, request):
