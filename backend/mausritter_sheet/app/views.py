@@ -2,9 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .serializers import ItemSerializer, UserItemSerializer, UserSerializer
+from .serializers import ItemSerializer, UserItemSerializer, UserSerializer, CharacterSheetSerializer
 from django.contrib.auth.hashers import check_password
-from .models import Item, UserItem, User
+from .models import Item, UserItem, User, CharacterSheet
 
 # Endpoint: GET /items/, POST /items/
 class ItemListCreateAPIView(generics.ListCreateAPIView):
@@ -45,3 +45,15 @@ class LoginView(APIView):
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+class CharacterSheetRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CharacterSheet.objects.all()
+    serializer_class = CharacterSheetSerializer
+
+# View especial: Listar todas as fichas de um usuário específico
+class UserCharacterSheetsView(generics.ListAPIView):
+    serializer_class = CharacterSheetSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return CharacterSheet.objects.filter(user__id=user_id)

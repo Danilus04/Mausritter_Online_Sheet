@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import Item, UserItem, User
+from .models import Item, UserItem, User, CharacterSheet
+
+class CharacterSheetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CharacterSheet
+        fields = '__all__'
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:

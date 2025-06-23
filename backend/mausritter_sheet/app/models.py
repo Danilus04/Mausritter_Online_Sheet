@@ -1,6 +1,34 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class CharacterSheet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='character_sheets')
+
+    nameCharacter = models.CharField(max_length=45, null=True, blank=True)
+    backgroundCharacter = models.CharField(max_length=45, null=True, blank=True)
+    birthsignCharacter = models.CharField(max_length=45, null=True, blank=True)
+    coatCharacter = models.CharField(max_length=45, null=True, blank=True)
+    lookCharacter = models.CharField(max_length=45, null=True, blank=True)
+
+    strCurrentCharacter = models.IntegerField(null=True, blank=True)
+    dexCurrentCharacter = models.IntegerField(null=True, blank=True)
+    willCurrentCharacter = models.IntegerField(null=True, blank=True)
+
+    strMaxCharacter = models.IntegerField(null=True, blank=True)
+    dexMaxCharacter = models.IntegerField(null=True, blank=True)
+    willMaxCharacter = models.IntegerField(null=True, blank=True)
+
+    hpCurrentCharacter = models.IntegerField(null=True, blank=True)
+    hpMaxCharacter = models.IntegerField(null=True, blank=True)
+
+    pipsCharacter = models.IntegerField(null=True, blank=True)
+    levelCharacter = models.IntegerField(null=True, blank=True)
+    xpCharacter = models.IntegerField(null=True, blank=True)
+    gritCharacter = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.nameCharacter} (User: {self.user.username})'
+
 class Item(models.Model):
     idSquare = models.AutoField(primary_key=True)
     nameSquare = models.CharField(max_length=100)
@@ -76,3 +104,4 @@ class User(models.Model):
 
     class Meta:
         db_table = 'User'
+
