@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ItemListCreateAPIView, ItemRetrieveUpdateDestroyAPIView, UserItemRetrieveUpdateDestroyAPIView, UserItemListCreateAPIView
+from .views import ItemListCreateAPIView, ItemRetrieveUpdateDestroyAPIView, UserItemRetrieveUpdateDestroyAPIView, UserItemListCreateAPIView, LoginView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -8,5 +8,6 @@ urlpatterns = [
     path('item/<int:pk>/', ItemRetrieveUpdateDestroyAPIView.as_view(), name='item-detail'),  # /items/1/
     path('user/items/<int:pk>/', UserItemRetrieveUpdateDestroyAPIView.as_view(), name='user-item-list-create'),  # /user/items/
     path('user/items/', UserItemListCreateAPIView.as_view(), name='user-item-detail'),  # /user/items/1/
+    path('login/', LoginView.as_view(), name='login'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
