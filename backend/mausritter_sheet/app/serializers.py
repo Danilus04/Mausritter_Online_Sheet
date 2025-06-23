@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, UserItem
+from .models import Item, UserItem, User
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,3 +13,8 @@ class UserItemSerializer(serializers.ModelSerializer):
         model = UserItem 
         fields = ['id', 'item_base', 'quantity', 'currentUsageSquare', 'id', 'item_base', 'PositionX', 'PositionY', 'user']  # Adicione outros campos conforme necessário
         #read_only_fields = ['id', 'item_base']  # Se não quiser que esses campos sejam editáveis
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['idUser', 'nameUser']
