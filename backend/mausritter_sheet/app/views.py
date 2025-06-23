@@ -1,6 +1,10 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework import generics
-from .models import Item, UserItem
-from .serializers import ItemSerializer, UserItemSerializer
+from .serializers import ItemSerializer, UserItemSerializer, UserSerializer
+from django.contrib.auth.hashers import check_password
+from .models import Item, UserItem, User
 
 # Endpoint: GET /items/, POST /items/
 class ItemListCreateAPIView(generics.ListCreateAPIView):
@@ -24,3 +28,20 @@ class UserItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
 class UserItemListCreateAPIView(generics.ListCreateAPIView):
     queryset = UserItem.objects.all()
     serializer_class = UserItemSerializer
+
+class LoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        try:
+            user = User.objects.get(nameUser=username)
+            # Se as senhas estiverem em texto puro, use:
+            if user.passwordUser == password:
+                return Response({'message': 'Login successful', 'user_id': user.idUser})
+            # Se usar hash, troque por:
+            # if check_password(password, user.passwordUser):
+            #     return Response({'message': 'Login successful', 'user_id': user.idUser})
+            else:
+                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
