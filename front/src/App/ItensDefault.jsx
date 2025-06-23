@@ -165,9 +165,14 @@ function ItensDefault() {
           ref={menuRef}
           top={menuData.top}
           left={menuData.left}
-          item={menuData.item}
           onClose={() => setMenuData(null)}
-        />
+        >
+          <button onClick={() => {
+            console.log("Importando:", menuData.item.nameSquare);
+            onClose();
+          }}>Import</button>
+        </Menu>
+
       )}
     </div>
   );
