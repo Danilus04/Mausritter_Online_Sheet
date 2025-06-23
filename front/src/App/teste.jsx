@@ -8,7 +8,7 @@ const Teste = () => {
     const [erro, setErro] = useState(null);
 
     useEffect(() => {
-        api.get('/user/items/')
+        api.get('/characters/items/')
             .then(response => {
                 setItens(response.data);
                 setLoading(false);
@@ -26,7 +26,7 @@ const Teste = () => {
     // Transforma os dados da API no formato esperado pelo Inventory
     const mappedItems = itens.map(item => ({
         id: item.id,
-        user: item.user,
+        character_sheet: item.character_sheet,
         nameSquare: item.item_base.nameSquare,
         widthSquare: item.item_base.widthSquare,
         heightSquare: item.item_base.heightSquare,
