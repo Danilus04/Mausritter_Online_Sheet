@@ -13,11 +13,12 @@ urlpatterns = [
     # Itens de uma ficha específica
     path('characters/items/', UserItemListCreateAPIView.as_view(), name='user-item-list-create'),
     
+    #items de uma ficha específica
     path('characters/<int:character_id>/items/', CharacterSheetItemsListAPIView.as_view(), name='character-items'),
     
     path('login/', LoginView.as_view(), name='login'),
 
-    # Endpoint especial: Listar fichas de um usuário
+    # Endpoint especial: Listar fichas de personagem de um usuário
     path('user/characters/<int:user_id>', UserCharacterSheetsView.as_view(), name='user-character-sheets'),
 
     # Endpoint de detalhe / update / delete por ID da ficha

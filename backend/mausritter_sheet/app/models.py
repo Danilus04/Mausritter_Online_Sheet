@@ -9,6 +9,7 @@ class CharacterSheet(models.Model):
     birthsignCharacter = models.CharField(max_length=45, null=True, blank=True)
     coatCharacter = models.CharField(max_length=45, null=True, blank=True)
     lookCharacter = models.CharField(max_length=45, null=True, blank=True)
+    UrlImageCharacter = models.CharField(max_length= 255,null=True, blank=True)  
 
     strCurrentCharacter = models.IntegerField(null=True, blank=True)
     dexCurrentCharacter = models.IntegerField(null=True, blank=True)
