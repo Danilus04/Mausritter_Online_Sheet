@@ -69,10 +69,3 @@ class UserItem(models.Model):
     def __str__(self):
         return f"{self.item_base.nameSquare} ({self.user.username}'s)"
 
-class User(models.Model):
-    idUser = models.AutoField(primary_key=True)
-    nameUser = models.CharField(max_length=45)
-    passwordUser = models.CharField(max_length=200)
-
-    class Meta:
-        db_table = 'User'

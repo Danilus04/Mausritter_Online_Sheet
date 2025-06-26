@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import api from '../apiAcess'; 
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -14,27 +15,22 @@ function Login() {
     setMessage('Tentando login...');
 
     try {
-      const response = await fetch('http://localhost:8000/app/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await api.post('login/', { username, password });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(`Sucesso! ${data.message} Bem-vindo(a), ${username}!`);
+      if (response.status === 200) {
+        setMessage(`Sucesso! ${response.data.message} Bem-vindo(a), ${username}!`);
         setTimeout(() => {
           navigate('/ficha');
         }, 1000);
       } else {
-        setMessage(`Erro: ${data.error || data.message}`);
+        setMessage(`Erro: ${response.data.error || response.data.message}`);
       }
     } catch (error) {
-      console.error('Erro ao conectar com o backend:', error);
-      setMessage('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+      if (error.response && error.response.data) {
+        setMessage(`Erro: ${error.response.data.error || error.response.data.message}`);
+      } else {
+        setMessage('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+      }
     }
   };
 

@@ -2,9 +2,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .serializers import ItemSerializer, UserItemSerializer, UserSerializer
+from rest_framework.permissions import AllowAny
+from .serializers import ItemSerializer, UserItemSerializer, UserSerializer, UserRegisterSerializer
 from django.contrib.auth.hashers import check_password
-from .models import Item, UserItem, User
+from django.contrib.auth import authenticate
+from .models import Item, UserItem
 
 # Endpoint: GET /items/, POST /items/
 class ItemListCreateAPIView(generics.ListCreateAPIView):
@@ -33,15 +35,24 @@ class LoginView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
-        try:
-            user = User.objects.get(nameUser=username)
-            # Se as senhas estiverem em texto puro, use:
-            if user.passwordUser == password:
-                return Response({'message': 'Login successful', 'user_id': user.idUser})
-            # Se usar hash, troque por:
-            # if check_password(password, user.passwordUser):
-            #     return Response({'message': 'Login successful', 'user_id': user.idUser})
-            else:
-                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            return Response({'message': 'Login successful', 'user_id': user.id})
+        else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class RegisterUserAPIView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        serializer = UserRegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                return Response({
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'message': 'Usuário registrado com sucesso.'
+                }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
