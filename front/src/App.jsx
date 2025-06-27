@@ -1,27 +1,60 @@
 // src/App.jsx
-
-import './App.css'
-import Ficha from './App/ficha'  // Importa o componente Ficha
-import ItensDefault from './App/ItensDefault'  // Importa o componente ItensDefault
-import Teste from './App/teste'
-import Login from './Login'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import './App.css';
+import Ficha from './App/ficha';
+import ItensDefault from './App/ItensDefault';
+import Teste from './App/teste';
+import Login from './components/Login';
+import Register from './components/Register';
+import Header from './components/Header';
+import ProtectedRoute from './ProtectedRoute';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
   return (
-    <>
-      <h1>Teste do componente Ficha</h1>
-      
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/ficha" element={<Ficha />} />
-          <Route path="/itens" element={<ItensDefault />} />
-          <Route path="/teste" element={<Teste />} />
-        </Routes>
-      </Router>
-    </>
-  )
+    <Router>
+      <AppLayout />
+    </Router>
+  );
 }
 
-export default App
+// Componente separado para poder acessar `useLocation`
+function AppLayout() {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/' || location.pathname === '/register';
+
+  return (
+    <div className="App">
+      {!isAuthPage && <Header />}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/ficha"
+          element={
+            <ProtectedRoute>
+              <Ficha />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/itens"
+          element={
+            <ProtectedRoute>
+              <ItensDefault />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teste"
+          element={
+            <ProtectedRoute>
+              <Teste />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
