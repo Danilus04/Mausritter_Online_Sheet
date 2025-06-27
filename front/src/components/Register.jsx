@@ -22,14 +22,17 @@ function Register() {
       return;
     }
 
-     try {
-    const response = await api.post('register/', {
-      username,
-      email,
-      password,
-      password2,
-    });
-
+    try {
+      const response = await api.post('register/', {
+        username,
+        email,
+        password,
+        password2,
+      });
+    if (response.data.access) {
+      localStorage.setItem('access', response.data.access);
+      localStorage.setItem('refresh', response.data.refresh);
+    }
     setMessage('Cadastro realizado com sucesso! Você pode fazer login agora.');
     setUsername('');
     setEmail('');

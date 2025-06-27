@@ -15,24 +15,26 @@ function Login() {
     setMessage('Tentando login...');
 
     try {
-      const response = await api.post('login/', { username, password });
-
+      const response = await api.post('api/token/', { username, password });
       if (response.status === 200) {
-        setMessage(`Sucesso! ${response.data.message} Bem-vindo(a), ${username}!`);
+      // Salve o token no localStorage ou context
+        localStorage.setItem('access', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh);
+        setMessage(`Sucesso! Bem-vindo(a), ${username}!`);
         setTimeout(() => {
           navigate('/ficha');
         }, 1000);
       } else {
-        setMessage(`Erro: ${response.data.error || response.data.message}`);
+        setMessage(`Erro: ${response.data.detail || response.data.message}`);
       }
     } catch (error) {
       if (error.response && error.response.data) {
-        setMessage(`Erro: ${error.response.data.error || error.response.data.message}`);
+        setMessage(`Erro: ${error.response.data.detail || error.response.data.message}`);
       } else {
         setMessage('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
       }
     }
-  };
+};
 
   return (
     <div className="container">
