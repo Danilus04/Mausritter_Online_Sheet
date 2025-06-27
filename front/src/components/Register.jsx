@@ -12,8 +12,7 @@ function Register() {
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Previne o recarregamento da página
-
+    e.preventDefault();
     setMessage('');
     setError('');
 
@@ -29,91 +28,90 @@ function Register() {
         password,
         password2,
       });
-    if (response.data.access) {
-      localStorage.setItem('access', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
-    }
-    setMessage('Cadastro realizado com sucesso! Você pode fazer login agora.');
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    setPassword2('');
-  } catch (err) {
-    if (err.response && err.response.data) {
-      const data = err.response.data;
-      setError(
-        data.username
-          ? `Usuário: ${data.username}`
-          : data.email
-          ? `Email: ${data.email}`
-          : data.password
-          ? `Senha: ${data.password}`
-          : JSON.stringify(data)
-      );
-    } else {
-      setError('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
-    }
-    }
 
-      
-  }
+      if (response.data.access) {
+        localStorage.setItem('access', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh);
+      }
+
+      setMessage('Cadastro realizado com sucesso! Você pode fazer login agora.');
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setPassword2('');
+    } catch (err) {
+      if (err.response && err.response.data) {
+        const data = err.response.data;
+        setError(
+          data.username
+            ? `Usuário: ${data.username}`
+            : data.email
+            ? `Email: ${data.email}`
+            : data.password
+            ? `Senha: ${data.password}`
+            : JSON.stringify(data)
+        );
+      } else {
+        setError('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+      }
+    }
+  };
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       <h2>Cadastro de Usuário</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.formGroup}>
-          <label htmlFor="username" style={styles.label}>Nome de Usuário:</label>
+      <form onSubmit={handleSubmit} className="form">
+        <div className="form-group">
+          <label htmlFor="username" className="label">Nome de Usuário:</label>
           <input
             type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="email" style={styles.label}>Email:</label>
+        <div className="form-group">
+          <label htmlFor="email" className="label">Email:</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="password" style={styles.label}>Senha:</label>
+        <div className="form-group">
+          <label htmlFor="password" className="label">Senha:</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="password2" style={styles.label}>Confirme a Senha:</label>
+        <div className="form-group">
+          <label htmlFor="password2" className="label">Confirme a Senha:</label>
           <input
             type="password"
             id="password2"
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        <button type="submit" style={styles.button}>Cadastrar</button>
+        <button type="submit" className="button">Cadastrar</button>
       </form>
 
-      {message && <p style={styles.successMessage}>{message}</p>}
-      {error && <p style={styles.errorMessage}>{error}</p>}
+      {message && <p className="successMessage">{message}</p>}
+      {error && <p className="errorMessage">{error}</p>}
     </div>
   );
 }
-
 
 export default Register;
