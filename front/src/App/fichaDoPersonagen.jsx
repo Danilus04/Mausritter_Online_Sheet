@@ -50,7 +50,9 @@ function CharacterSheetPage() {
   if (loading) return <p>Carregando ficha...</p>;
   if (error) return <p>{error}</p>;
   if (!character) return null;
-  console.log('Character data:', character);
+  
+  //console.log('Character data:', character);
+  
   return (
     <div className="character-sheet">
       <h2>Ficha: 

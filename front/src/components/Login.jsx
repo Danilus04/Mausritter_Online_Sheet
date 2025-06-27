@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import api from '../apiAcess'; 
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -14,29 +15,26 @@ function Login() {
     setMessage('Tentando login...');
 
     try {
-      const response = await fetch('http://localhost:8000/app/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(`Sucesso! ${data.message} Bem-vindo(a), ${username}!`);
+      const response = await api.post('api/token/', { username, password });
+      if (response.status === 200) {
+      // Salve o token no localStorage ou context
+        localStorage.setItem('access', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh);
+        setMessage(`Sucesso! Bem-vindo(a), ${username}!`);
         setTimeout(() => {
           navigate('/ficha');
         }, 1000);
       } else {
-        setMessage(`Erro: ${data.error || data.message}`);
+        setMessage(`Erro: ${response.data.detail || response.data.message}`);
       }
     } catch (error) {
-      console.error('Erro ao conectar com o backend:', error);
-      setMessage('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+      if (error.response && error.response.data) {
+        setMessage(`Erro: ${error.response.data.detail || error.response.data.message}`);
+      } else {
+        setMessage('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+      }
     }
-  };
+};
 
   return (
     <div className="container">

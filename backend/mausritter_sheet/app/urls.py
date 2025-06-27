@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import ItemListCreateAPIView, ItemRetrieveUpdateDestroyAPIView, UserItemRetrieveUpdateDestroyAPIView, UserItemListCreateAPIView, LoginView, CharacterSheetRetrieveUpdateDestroyAPIView, UserCharacterSheetsView, CharacterSheetItemsListAPIView
+from .views import ItemListCreateAPIView, ItemRetrieveUpdateDestroyAPIView, UserItemRetrieveUpdateDestroyAPIView, UserItemListCreateAPIView, RegisterUserAPIView, CharacterSheetRetrieveUpdateDestroyAPIView, UserCharacterSheetsView, CharacterSheetItemsListAPIView
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('item/', ItemListCreateAPIView.as_view(), name='item-list-create'),         # /items/
@@ -16,7 +17,9 @@ urlpatterns = [
     #items de uma ficha específica
     path('characters/<int:character_id>/items/', CharacterSheetItemsListAPIView.as_view(), name='character-items'),
     
-    path('login/', LoginView.as_view(), name='login'),
+    path('register/', RegisterUserAPIView.as_view(), name='register_user'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # Endpoint especial: Listar fichas de personagem de um usuário
     path('user/characters/<int:user_id>', UserCharacterSheetsView.as_view(), name='user-character-sheets'),

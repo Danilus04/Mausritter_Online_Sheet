@@ -2,9 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .serializers import ItemSerializer, UserItemSerializer, UserSerializer, CharacterSheetSerializer
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import ItemSerializer, UserItemSerializer, UserSerializer, UserRegisterSerializer, CharacterSheetSerializer
 from django.contrib.auth.hashers import check_password
-from .models import Item, UserItem, User, CharacterSheet
+from django.contrib.auth import authenticate
+from .models import Item, UserItem, CharacterSheet
 
 # Endpoint: GET /items/, POST /items/
 class ItemListCreateAPIView(generics.ListCreateAPIView):
@@ -33,29 +36,17 @@ class CharacterSheetItemsListAPIView(generics.ListAPIView):
 
 class LoginView(APIView):
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        try:
-            user = User.objects.get(nameUser=username)
-            # Se as senhas estiverem em texto puro, use:
-            if user.passwordUser == password:
-                return Response({'message': 'Login successful', 'user_id': user.idUser})
-            # Se usar hash, troque por:
-            # if check_password(password, user.passwordUser):
-            #     return Response({'message': 'Login successful', 'user_id': user.idUser})
-            else:
-                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        
-class CharacterSheetRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CharacterSheet.objects.all()
-    serializer_class = CharacterSheetSerializer
-
-# View especial: Listar todas as fichas de um usuário específico
-class UserCharacterSheetsView(generics.ListAPIView):
-    serializer_class = CharacterSheetSerializer
-
-    def get_queryset(self):
-        user_id = self.kwargs['user_id']
-        return CharacterSheet.objects.filter(user__id=user_id)
+        serializer = UserRegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                    'message': 'Usuário registrado com sucesso.'
+                }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
