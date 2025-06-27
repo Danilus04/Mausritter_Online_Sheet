@@ -1,6 +1,35 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class CharacterSheet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='character_sheets')
+
+    nameCharacter = models.CharField(max_length=45, null=True, blank=True)
+    backgroundCharacter = models.CharField(max_length=45, null=True, blank=True)
+    birthsignCharacter = models.CharField(max_length=45, null=True, blank=True)
+    coatCharacter = models.CharField(max_length=45, null=True, blank=True)
+    lookCharacter = models.CharField(max_length=45, null=True, blank=True)
+    UrlImageCharacter = models.CharField(max_length= 255,null=True, blank=True)  
+
+    strCurrentCharacter = models.IntegerField(null=True, blank=True)
+    dexCurrentCharacter = models.IntegerField(null=True, blank=True)
+    willCurrentCharacter = models.IntegerField(null=True, blank=True)
+
+    strMaxCharacter = models.IntegerField(null=True, blank=True)
+    dexMaxCharacter = models.IntegerField(null=True, blank=True)
+    willMaxCharacter = models.IntegerField(null=True, blank=True)
+
+    hpCurrentCharacter = models.IntegerField(null=True, blank=True)
+    hpMaxCharacter = models.IntegerField(null=True, blank=True)
+
+    pipsCharacter = models.IntegerField(null=True, blank=True)
+    levelCharacter = models.IntegerField(null=True, blank=True)
+    xpCharacter = models.IntegerField(null=True, blank=True)
+    gritCharacter = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.nameCharacter} (User: {self.user.username})'
+
 class Item(models.Model):
     idSquare = models.AutoField(primary_key=True)
     nameSquare = models.CharField(max_length=100)
@@ -33,39 +62,23 @@ class Item(models.Model):
         return self.nameSquare
 
 class UserItem(models.Model):
-    # Este modelo representa uma INSTÂNCIA específica de um Item que pertence a um User
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='inventory_items')
+    character_sheet = models.ForeignKey(CharacterSheet, on_delete=models.CASCADE, related_name='inventory_items')
     item_base = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='user_instances')
-    quantity = models.PositiveIntegerField(default=1) # Para itens empilháveis (ex: poções)
+    quantity = models.PositiveIntegerField(default=1)
 
     PositionX = models.IntegerField(blank=True, null=True)
     PositionY = models.IntegerField(blank=True, null=True)
-    # Atributos que o usuário pode alterar para ESTA INSTÂNCIA do item
-    # Por exemplo, se uma espada pode ter sua durabilidade reduzida ou aprimorada
-    # currentDurability = models.IntegerField(blank=True, null=True)
     currentUsageSquare = models.IntegerField(blank=True, null=True)
-    # max_durability = models.IntegerField(blank=True, null=True)
-    
-    # Se 'currentUsageSquare' e 'maxUsageSquare' do Item puderem ser alterados por instância,
-    # você os moveria para cá. Se são características fixas do TIPO de item, ficam no Item.
-    # Exemplo: Uma poção pode ter 3 usos, e cada poção que um usuário tem começa com 3 usos
-    # e diminui individualmente.
 
-    # Exemplo de um atributo que pode ser afetado por uso:
-    # current_charges = models.IntegerField(blank=True, null=True)
-
-    # Você pode adicionar campos para "status" ou "condição" específicos desta instância
-    # Por exemplo, "condition" para itens que podem se quebrar
-    # condition = models.CharField(max_length=50, blank=True, null=True)
-    
-    # Se você quiser que o usuário possa renomear um item, adicione um campo aqui
-    # custom_name = models.CharField(max_length=100, blank=True, null=True)
+    # Exemplo de futuro: custom_name = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
+        verbose_name = "Item do Personagem"
+        verbose_name_plural = "Itens dos Personagens"
 
-        verbose_name = "Item do Usuário"
-        verbose_name_plural = "Itens do Usuário"
-        
     def __str__(self):
-        return f"{self.item_base.nameSquare} ({self.user.username}'s)"
+        return f"{self.item_base.nameSquare} - {self.character_sheet.nameCharacter}"
 
+
+    class Meta:
+        db_table = 'User'

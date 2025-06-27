@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Item, UserItem
-from django.contrib.auth.models import User
+from .models import Item, UserItem, User, CharacterSheet
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,12 +7,20 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserItemSerializer(serializers.ModelSerializer):
-    item_base = ItemSerializer(read_only=True)  # Inclui os detalhes do Item base
+    item_base = ItemSerializer(read_only=True)
+    character_sheet = serializers.PrimaryKeyRelatedField(queryset=CharacterSheet.objects.all())
 
     class Meta:
-        model = UserItem 
-        fields = ['id', 'item_base', 'quantity', 'currentUsageSquare', 'id', 'item_base', 'PositionX', 'PositionY', 'user']  # Adicione outros campos conforme necessário
-        #read_only_fields = ['id', 'item_base']  # Se não quiser que esses campos sejam editáveis
+        model = UserItem
+        fields = [
+            'id',
+            'character_sheet',   # Agora vinculado à ficha
+            'item_base',
+            'quantity',
+            'currentUsageSquare',
+            'PositionX',
+            'PositionY',
+        ]
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

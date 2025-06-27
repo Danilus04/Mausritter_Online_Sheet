@@ -2,11 +2,13 @@
 import './App.css';
 import Ficha from './App/ficha';
 import ItensDefault from './App/ItensDefault';
-import Teste from './App/teste';
 import Login from './components/Login';
 import Register from './components/Register';
 import Header from './components/Header';
 import ProtectedRoute from './ProtectedRoute';
+import Teste from './components/CharacterInventory'
+import CharacterSheetPage from './App/fichaDoPersonagen'  // Importa a página de ficha do personagem
+
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
@@ -45,10 +47,10 @@ function AppLayout() {
           }
         />
         <Route
-          path="/teste"
+          path="/characters/:id/"
           element={
             <ProtectedRoute>
-              <Teste />
+              <CharacterSheetPage />
             </ProtectedRoute>
           }
         />
