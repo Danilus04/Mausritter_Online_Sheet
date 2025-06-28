@@ -1,5 +1,5 @@
 "use client";
-import "./styles/CheckBoxInput.css";
+import "./styles/CheckBoxInput.css"; 
 
 export default function CheckboxInput({ label, checked, onChange }) {
   return (

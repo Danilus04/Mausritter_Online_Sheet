@@ -1,0 +1,79 @@
+/* Container principal */
+.item-form-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 32px;
+  padding-top: 80px; /* ou 100px se o header for fixo */
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 80px;  /* gap abaixo do header */
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* opcional: sombra suave */
+  display: flex;
+}
+
+
+
+/* Estilização do bloco de inputs */
+.input-group {
+  padding: 10px;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-left: 50px;
+}
+
+@media (max-width: 600px) {
+  .input-container {
+    width: 100%; /* em telas pequenas, ocupa a linha toda */
+  }
+}
+
+
+/* Input genérico (ajustado para inputs personalizados também) */
+.input-field {
+  flex: 1 1 250px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #aaa;
+  font-size: 14px;
+}
+
+/* Espaçamento vertical personalizado (caso Spacer falhe) */
+.spacer {
+  height: 15px;
+}
+
+/* Checkbox */
+.checkbox-label {
+  font-size: 0.9rem;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Imagem e botão */
+.image-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.image-button {
+  background-color: #444;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.image-button:hover {
+  background-color: #666;
+}
+
