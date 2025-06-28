@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Inventory from "../components/Inventory";
 import api from '../apiAcess';
 

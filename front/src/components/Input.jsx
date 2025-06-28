@@ -1,4 +1,4 @@
-import "./Input.css";
+import "./styles/Input.css";
 
 function Input({ label, value, onChange, type = "text", placeholder = "" }) {
   return (

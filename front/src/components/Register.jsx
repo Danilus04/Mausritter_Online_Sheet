@@ -1,7 +1,7 @@
 // src/Register.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import api from '../apiAcess';
-import './Register.css';
+import './styles/Register.css';
 
 function Register() {
   const [username, setUsername] = useState('');

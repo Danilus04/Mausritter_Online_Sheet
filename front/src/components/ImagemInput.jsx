@@ -1,6 +1,6 @@
 "use client";
 
-import "./ImagemInput.css";
+import "./styles/ImagemInput.css";
 
 export default function ImageInput({ onChange ,label}) {
   return (

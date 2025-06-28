@@ -1,4 +1,4 @@
-import './items.css';
+import './styles/items.css';
 
 function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellSize = 150, style }) {
   const {

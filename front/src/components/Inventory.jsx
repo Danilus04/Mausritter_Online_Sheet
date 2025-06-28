@@ -1,5 +1,5 @@
 import Item from './items';
-import './inventory.css';
+import './styles/inventory.css';
 import { useState, useRef } from 'react';
 import api from '../apiAcess';
 

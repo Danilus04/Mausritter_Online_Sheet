@@ -1,6 +1,6 @@
-import './Header.css'; // no topo
+import './styles/Header.css'; // no topo
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../apiAcess'; // Importa a instância do axios configurada
 
 function Header() {

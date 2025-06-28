@@ -6,8 +6,6 @@ import Spacer from "./Spacer"
 import CheckBoxInput  from "./CheckBoxInput"
 import ImageInput from "./ImagemInput";
 
-import SubmitButton from "./SubmitButton";
-import { label } from "framer-motion/client";
 export default function ItemPageCrate() {
   const [imageFile, setImageFile] = useState(null);
 
