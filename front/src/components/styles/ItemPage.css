@@ -6,13 +6,11 @@
   padding-top: 80px; /* ou 100px se o header for fixo */
   max-width: 800px;
   margin: 0 auto;
-  margin-top: 80px;  /* gap abaixo do header */
+  margin-top: 80px; /* gap abaixo do header */
   color: #333;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* opcional: sombra suave */
   display: flex;
 }
-
-
 
 /* Estilização do bloco de inputs */
 .input-group {
@@ -30,7 +28,6 @@
     width: 100%; /* em telas pequenas, ocupa a linha toda */
   }
 }
-
 
 /* Input genérico (ajustado para inputs personalizados também) */
 .input-field {
@@ -77,3 +74,17 @@
   background-color: #666;
 }
 
+/* Adicione esta classe ao seu arquivo CSS */
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Alinha os itens verticalmente ao centro */
+  gap: 16px; /* Cria um espaço entre os itens */
+  width: 100%;
+}
+
+/* Opcional: Faz com que cada item na linha ocupe um espaço igual */
+.form-row > * {
+  flex: 1;
+}

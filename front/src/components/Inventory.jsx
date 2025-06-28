@@ -1,7 +1,7 @@
-import Item from './items';
-import './styles/inventory.css';
-import { useState, useRef } from 'react';
-import api from '../apiAcess';
+import { useRef, useState } from "react";
+import api from "../apiAcess";
+import Item from "./items/Items";
+import "./styles/inventory.css";
 
 function Inventory({ items, gridWidth, gridHeight }) {
   const [localItems, setLocalItems] = useState(items);
@@ -23,26 +23,23 @@ function Inventory({ items, gridWidth, gridHeight }) {
     const itemWidth = draggingItem.widthSquare;
     const itemHeight = draggingItem.heightSquare;
 
-    const isOutOfBounds =
-      targetX < 0 ||
-      targetY < 0 ||
-      targetX + itemWidth > gridWidth ||
-      targetY + itemHeight > gridHeight;
+    const isOutOfBounds = targetX < 0 || targetY < 0 || targetX + itemWidth > gridWidth || targetY + itemHeight > gridHeight;
 
     if (isOutOfBounds) {
-      console.warn('Item não pode ser posicionado fora dos limites do grid.');
+      console.warn("Item não pode ser posicionado fora dos limites do grid.");
       setDraggingItem(null);
       return; // Cancela o drop
     }
     console.log(draggingItem.character_sheet);
 
-    api.put(`/characters/items/${draggingItem.id}/`, {
-      PositionX: targetX,
-      PositionY: targetY,
-      character_sheet: draggingItem.character_sheet,
-    })
-      .then(response => {
-        console.log('Posição atualizada com sucesso:', response.data);
+    api
+      .put(`/characters/items/${draggingItem.id}/`, {
+        PositionX: targetX,
+        PositionY: targetY,
+        character_sheet: draggingItem.character_sheet,
+      })
+      .then((response) => {
+        console.log("Posição atualizada com sucesso:", response.data);
 
         const updatedItems = localItems.map((it) => {
           if (it === draggingItem) {
@@ -54,8 +51,8 @@ function Inventory({ items, gridWidth, gridHeight }) {
         setLocalItems(updatedItems);
         setDraggingItem(null);
       })
-      .catch(error => {
-        console.error('Erro ao atualizar posição:', error);
+      .catch((error) => {
+        console.error("Erro ao atualizar posição:", error);
         setDraggingItem(null);
       });
   };
@@ -68,19 +65,17 @@ function Inventory({ items, gridWidth, gridHeight }) {
     const mouseY = e.clientY;
 
     const isInsideGrid =
-      mouseX >= inventoryRect.left &&
-      mouseX <= inventoryRect.right &&
-      mouseY >= inventoryRect.top &&
-      mouseY <= inventoryRect.bottom;
+      mouseX >= inventoryRect.left && mouseX <= inventoryRect.right && mouseY >= inventoryRect.top && mouseY <= inventoryRect.bottom;
 
     if (!isInsideGrid) {
-      api.put(`/characters/items/${draggingItem.id}/`, {
-        PositionX: null,
-        PositionY: null,
-        character_sheet: draggingItem.character_sheet,
-      })
-        .then(response => {
-          console.log('Item removido do grid com sucesso:', response.data);
+      api
+        .put(`/characters/items/${draggingItem.id}/`, {
+          PositionX: null,
+          PositionY: null,
+          character_sheet: draggingItem.character_sheet,
+        })
+        .then((response) => {
+          console.log("Item removido do grid com sucesso:", response.data);
 
           const updatedItems = localItems.map((it) => {
             if (it === draggingItem) {
@@ -92,8 +87,8 @@ function Inventory({ items, gridWidth, gridHeight }) {
           setLocalItems(updatedItems);
           setDraggingItem(null);
         })
-        .catch(error => {
-          console.error('Erro ao remover item do grid:', error);
+        .catch((error) => {
+          console.error("Erro ao remover item do grid:", error);
           setDraggingItem(null);
         });
     } else {
@@ -109,11 +104,11 @@ function Inventory({ items, gridWidth, gridHeight }) {
           key={`${x}-${y}`}
           className="grid-cell"
           style={{
-            width: '150px',
-            height: '150px',
-            border: '1px dashed #ccc',
-            boxSizing: 'border-box',
-            position: 'absolute',
+            width: "150px",
+            height: "150px",
+            border: "1px dashed #ccc",
+            boxSizing: "border-box",
+            position: "absolute",
             left: `${x * 150}px`,
             top: `${y * 150}px`,
           }}
@@ -131,13 +126,13 @@ function Inventory({ items, gridWidth, gridHeight }) {
       style={{
         width: gridWidth * 150,
         height: gridHeight * 150,
-        position: 'relative',
+        position: "relative",
       }}
     >
       {gridCells}
 
       {localItems
-        .filter(item => item.positionX !== null && item.positionY !== null)
+        .filter((item) => item.positionX !== null && item.positionY !== null)
         .map((item, index) => {
           const left = item.positionX * 150;
           const top = item.positionY * 150;
@@ -146,7 +141,7 @@ function Inventory({ items, gridWidth, gridHeight }) {
             <div
               key={index}
               style={{
-                position: 'absolute',
+                position: "absolute",
                 left: `${left}px`,
                 top: `${top}px`,
                 width: `${item.widthSquare * 150}px`,

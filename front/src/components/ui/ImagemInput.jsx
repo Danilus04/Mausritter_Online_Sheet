@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react"; // Importe useState e useEffect
-import "./styles/ImagemInput.css";
+import "../styles/ImagemInput.css";
 
 export default function ImageInput({ onChange, label }) {
   const [previewImage, setPreviewImage] = useState(null); // Estado para armazenar o URL da imagem

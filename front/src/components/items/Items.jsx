@@ -1,4 +1,4 @@
-import './styles/items.css';
+import "../styles/items.css";
 
 function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellSize = 150, style }) {
   const {
@@ -29,13 +29,7 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
 
   const usos = [];
   for (let i = 0; i < maxUsos; i++) {
-    usos.push(
-      <div
-        key={i}
-        className="usage-dot"
-        style={{ backgroundColor: i < (currentUsageSquare || 0) ? 'black' : 'white' }}
-      ></div>
-    );
+    usos.push(<div key={i} className="usage-dot" style={{ backgroundColor: i < (currentUsageSquare || 0) ? "black" : "white" }}></div>);
   }
 
   return (
@@ -51,18 +45,12 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
     >
       <div className="item-name">{nameSquare}</div>
       <div className="item-image-wrapper">
-        <div className="item-usage">
-          {usos}
-        </div>
+        <div className="item-usage">{usos}</div>
         <div className="item-info-line">
-          {typeSquare || '-'} | {damage1Square || '-'} | {damage2Square || '-'} | {valueArmorSquare || '-'} | {pesoSquare || '-'}
+          {typeSquare || "-"} | {damage1Square || "-"} | {damage2Square || "-"} | {valueArmorSquare || "-"} | {pesoSquare || "-"}
         </div>
         <div className="item-image">
-          {imageSquare ? (
-            <img src={imageSquare} alt={nameSquare} />
-          ) : (
-            <span className="sem-imagem">[Sem imagem]</span>
-          )}
+          {imageSquare ? <img src={imageSquare} alt={nameSquare} /> : <span className="sem-imagem">[Sem imagem]</span>}
         </div>
       </div>
     </div>

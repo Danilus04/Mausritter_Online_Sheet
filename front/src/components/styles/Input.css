@@ -6,7 +6,7 @@
   width: 46%;
   box-sizing: border-box;
 }
-  
+
 .input-label {
   font-size: 16px;
   margin-bottom: 8px;
@@ -27,4 +27,15 @@
 .custom-input:focus {
   border-color: #007bff;
   outline: none;
+}
+
+/* Classe especial para o container do input de descrição */
+.input-descricao-grande {
+  width: 100%; /* Faz o container do input ocupar a linha toda */
+}
+
+/* Altera a altura do campo .custom-input QUANDO ele está dentro do container .input-descricao-grande */
+.input-descricao-grande .custom-input {
+  height: 90px;
+  resize: vertical; /* Opcional: permite que o usuário aumente a altura */
 }
