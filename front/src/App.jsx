@@ -2,11 +2,14 @@
 import './App.css';
 import Ficha from './App/ficha';
 import ItensDefault from './App/ItensDefault';
-import Teste from './App/teste';
 import Login from './components/Login';
 import Register from './components/Register';
 import Header from './components/Header';
 import ProtectedRoute from './ProtectedRoute';
+import ItemPage from './components/ItemPage'; // Importa a página de criação de item
+import ItemPageUpdate from './components/ItemPageUpdate'; // Importa a página de edição de item
+import CharacterSheetPage from './App/fichaDoPersonagen'  // Importa a página de ficha do personagem
+
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
@@ -29,6 +32,23 @@ function AppLayout() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
+          path="/item/create"
+          element={
+            <ProtectedRoute>
+              <ItemPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/item/update/"
+          element={
+            <ProtectedRoute>
+              {/* ITEM UPDATE nÃO VEM COM ID TEM QUE RESOLVER ISSO AI!!!! DEIXAREI PADRÃO ITEM 1 PARA ALTERAR */}
+              <ItemPageUpdate  />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
           path="/ficha"
           element={
             <ProtectedRoute>
@@ -45,10 +65,10 @@ function AppLayout() {
           }
         />
         <Route
-          path="/teste"
+          path="/characters/:id/"
           element={
             <ProtectedRoute>
-              <Teste />
+              <CharacterSheetPage />
             </ProtectedRoute>
           }
         />

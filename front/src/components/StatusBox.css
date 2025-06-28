@@ -1,0 +1,47 @@
+.status-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #fdfcf8; /* Cor de papel */
+  font-family: monospace;
+  width: fit-content;
+  border: 2px solid black;
+}
+
+.status-section {
+  padding: 6px 12px;
+  text-align: center;
+  min-width: 50px;
+}
+
+.status-label {
+  font-weight: bold;
+  background-color: #DDDDDD;
+  font-family: 'UnifrakturCook', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  padding: 6px 16px;
+  text-align: center;
+}
+
+.status-input {
+  border: none;
+  background: transparent;
+  text-align: center;
+  width: 60px;
+  font-family: monospace;
+  color:black;
+  font-size: larger;
+}
+
+.status-input:focus {
+  outline: none;
+  background-color: #fffef2;
+}
+
+.status-divider {
+  width: 2px;
+  background-color: black;
+  color: black;
+  align-self: stretch;
+}

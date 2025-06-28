@@ -34,11 +34,12 @@ function Inventory({ items, gridWidth, gridHeight }) {
       setDraggingItem(null);
       return; // Cancela o drop
     }
+    console.log(draggingItem.character_sheet);
 
-    api.put(`/user/items/${draggingItem.id}/`, {
+    api.put(`/characters/items/${draggingItem.id}/`, {
       PositionX: targetX,
       PositionY: targetY,
-      user: draggingItem.user,
+      character_sheet: draggingItem.character_sheet,
     })
       .then(response => {
         console.log('Posição atualizada com sucesso:', response.data);
@@ -73,10 +74,10 @@ function Inventory({ items, gridWidth, gridHeight }) {
       mouseY <= inventoryRect.bottom;
 
     if (!isInsideGrid) {
-      api.put(`/user/items/${draggingItem.id}/`, {
+      api.put(`/characters/items/${draggingItem.id}/`, {
         PositionX: null,
         PositionY: null,
-        user: draggingItem.user,
+        character_sheet: draggingItem.character_sheet,
       })
         .then(response => {
           console.log('Item removido do grid com sucesso:', response.data);
