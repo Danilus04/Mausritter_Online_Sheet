@@ -1,12 +1,12 @@
 "use client";
-import api from "./src/apiAcess";
+import api from "../apiAcess";
 import { useState } from "react";
-import Input from "./src/components/Input" 
-import Spacer from "./src/components/Spacer"
-import CheckBoxInput  from "./src/components/CheckBoxInput"
-import ImageInput from "./src/components/ImagemInput";
+import Input from "./Input" 
+import Spacer from "./Spacer"
+import CheckBoxInput  from "./CheckBoxInput"
+import ImageInput from "./ImagemInput";
 
-import SubmitButton from "./src/components/SubmitButton";
+import SubmitButton from "./SubmitButton";
 import { label } from "framer-motion/client";
 export default function ItemPageCrate() {
   const [imageFile, setImageFile] = useState(null);

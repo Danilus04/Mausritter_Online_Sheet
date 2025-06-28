@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-import api from "./src/apiAcess";
-import Input from "./src/components/Input";
-import Spacer from "./src/components/Spacer";
-import CheckBoxInput from "./src/components/CheckBoxInput";
-import ImageInput from "./src/components/ImagemInput";
+import api from "../apiAcess";
+import Input from "./Input";
+import Spacer from "./Spacer";
+import CheckBoxInput from "./CheckBoxInput";
+import ImageInput from "./ImagemInput";
 
 export default function ItemPageEdit({ item }) {
   const [form, setForm] = useState({

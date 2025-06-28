@@ -6,7 +6,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Header from './components/Header';
 import ProtectedRoute from './ProtectedRoute';
-import Teste from './components/CharacterInventory'
+import ItemPage from './components/ItemPage'; // Importa a página de criação de item
+import ItemPageUpdate from './components/ItemPageUpdate'; // Importa a página de edição de item
 import CharacterSheetPage from './App/fichaDoPersonagen'  // Importa a página de ficha do personagem
 
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
@@ -30,6 +31,23 @@ function AppLayout() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/item/create"
+          element={
+            <ProtectedRoute>
+              <ItemPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/item/update/"
+          element={
+            <ProtectedRoute>
+              {/* ITEM UPDATE nÃO VEM COM ID TEM QUE RESOLVER ISSO AI!!!! DEIXAREI PADRÃO ITEM 1 PARA ALTERAR */}
+              <ItemPageUpdate  />
+            </ProtectedRoute>
+          }
+        ></Route>
         <Route
           path="/ficha"
           element={

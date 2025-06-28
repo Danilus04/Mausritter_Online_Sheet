@@ -14,6 +14,7 @@ function Header() {
   return (
     <header style={styles.header}>
       <h2 style={styles.title}>Mausritter App</h2>
+      <br></br>
       <button onClick={handleLogout} style={styles.button}>Logout</button>
     </header>
   );
