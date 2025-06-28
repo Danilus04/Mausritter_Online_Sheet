@@ -4,10 +4,11 @@ from rest_framework import status
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import ItemSerializer, UserItemSerializer, UserSerializer, UserRegisterSerializer, CharacterSheetSerializer
+from .serializers import ItemSerializer, UserItemSerializer, UserRegisterSerializer, CharacterSheetSerializer
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate
 from .models import Item, UserItem, CharacterSheet
+from rest_framework.permissions import IsAuthenticated
 
 # Endpoint: GET /items/, POST /items/
 class ItemListCreateAPIView(generics.ListCreateAPIView):
@@ -38,13 +39,12 @@ class CharacterSheetRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyA
     queryset = CharacterSheet.objects.all()
     serializer_class = CharacterSheetSerializer
 
-# View especial: Listar todas as fichas de um usuário específico
 class UserCharacterSheetsView(generics.ListAPIView):
     serializer_class = CharacterSheetSerializer
+    permission_classes = [IsAuthenticated]  # Garante que só usuários autenticados acessem
 
     def get_queryset(self):
-        user_id = self.kwargs['user_id']
-        return CharacterSheet.objects.filter(user__id=user_id)
+        return CharacterSheet.objects.filter(user=self.request.user)
 
 class RegisterUserAPIView(APIView):
     permission_classes = (AllowAny,)
