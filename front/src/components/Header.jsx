@@ -1,6 +1,6 @@
-import './Header.css'; // no topo
+import './styles/Header.css'; // no topo
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../apiAcess'; // Importa a instância do axios configurada
 
 function Header() {
@@ -20,31 +20,31 @@ function Header() {
   }, []);
 
   return (
-    <header className="header">
-      <div className="nav-left">
-        <Link to="/ficha" className="link">Ficha</Link>
-        <Link to="/itens" className="link">Itens</Link>
-        <Link to="/item/create" className="link">Criar Item</Link>
-        <div className="dropdown">
-          <span className="link">Personagens ▾</span>
-          <div className="dropdown-content">
-            {characters.length === 0 ? (
-              <div>Nenhum personagem</div>
-            ) : (
-              characters.map(char => (
-                <Link
-                  key={char.id}
-                  to={`/characters/${char.id}/`}
-                >
-                  {char.nameCharacter || `ID ${char.id}`}
-                </Link>
-              ))
-            )}
-          </div>
+<header className="header">
+  <div className="header-content">
+    <div className="nav-left">
+      <Link to="/ficha" className="link">Ficha</Link>
+      <Link to="/itens" className="link">Itens</Link>
+      <Link to="/item/create" className="link">Criar Item</Link>
+      <div className="dropdown">
+        <span className="link">Personagens ▾</span>
+        <div className="dropdown-content">
+          {characters.length === 0 ? (
+            <div>Nenhum personagem</div>
+          ) : (
+            characters.map(char => (
+              <Link key={char.id} to={`/characters/${char.id}/`}>
+                {char.nameCharacter || `ID ${char.id}`}
+              </Link>
+            ))
+          )}
         </div>
       </div>
-      <button onClick={handleLogout} className="button-logout">Logout</button>
-    </header>
+    </div>
+    <button onClick={handleLogout} className="button-logout">Logout</button>
+  </div>
+</header>
+
   );
 }
 

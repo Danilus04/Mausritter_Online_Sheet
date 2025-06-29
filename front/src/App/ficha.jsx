@@ -1,8 +1,8 @@
 // src/App/ficha.jsx
-import { useEffect, useState, useRef } from 'react';
-import api from '../apiAcess';
-import Item from '../components/items';
-import Menu from '../components/Menu';
+import { useEffect, useRef, useState } from "react";
+import api from "../apiAcess";
+import Item from "../components/items/Items";
+import Menu from "../components/Menu";
 
 function Ficha() {
   const [itens, setItens] = useState([]);
@@ -13,12 +13,13 @@ function Ficha() {
   const menuRef = useRef(null);
 
   useEffect(() => {
-    api.get('/item/')
-      .then(response => {
+    api
+      .get("/item/")
+      .then((response) => {
         setItens(response.data);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Erro ao buscar itens:", error);
         setErro("Erro ao carregar os itens.");
         setLoading(false);
@@ -32,16 +33,17 @@ function Ficha() {
       }
     };
 
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [menuData]);
 
   const handleDelete = (item) => {
-    api.delete(`/item/${item.idSquare}/`)
+    api
+      .delete(`/item/${item.idSquare}/`)
       .then(() => {
-        setItens(itens.filter(i => i.idSquare !== item.idSquare));
+        setItens(itens.filter((i) => i.idSquare !== item.idSquare));
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Erro ao deletar item:", err);
         alert("Erro ao deletar item.");
       });
@@ -53,27 +55,27 @@ function Ficha() {
     setMenuData({
       item: item,
       top: rect.bottom + window.scrollY + 5,
-      left: rect.left + (rect.width / 2) + window.scrollX,
+      left: rect.left + rect.width / 2 + window.scrollX,
     });
   };
 
   const CELL_SIZE = 150;
 
   const containerStyle = {
-    display: 'grid',
+    display: "grid",
     gridTemplateColumns: `repeat(auto-fill, ${CELL_SIZE}px)`,
     gridAutoRows: `${CELL_SIZE}px`,
-    gridAutoFlow: 'dense',
+    gridAutoFlow: "dense",
     gap: 0,
-    width: '100%',
+    width: "100%",
   };
 
   const getItemStyle = (item) => ({
     gridColumnEnd: `span ${item.widthSquare}`,
     gridRowEnd: `span ${item.heightSquare}`,
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden',
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
   });
 
   if (erro) return <p>{erro}</p>;
@@ -84,7 +86,7 @@ function Ficha() {
       <h2>Itens da Ficha</h2>
       <div style={containerStyle}>
         {itens.length > 0 ? (
-          itens.map(item => (
+          itens.map((item) => (
             <Item
               key={item.idSquare}
               item={item}
@@ -99,16 +101,13 @@ function Ficha() {
       </div>
 
       {menuData && (
-        <Menu
-          ref={menuRef}
-          top={menuData.top}
-          left={menuData.left}
-          onClose={() => setMenuData(null)}
-        >
-          <button onClick={() => {
-            handleDelete(menuData.item);
-            setMenuData(null);
-          }}>
+        <Menu ref={menuRef} top={menuData.top} left={menuData.left} onClose={() => setMenuData(null)}>
+          <button
+            onClick={() => {
+              handleDelete(menuData.item);
+              setMenuData(null);
+            }}
+          >
             Deletar
           </button>
         </Menu>

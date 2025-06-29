@@ -1,0 +1,42 @@
+/* Container principal */
+.item-form-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 32px;
+  padding-top: 80px; /* ou 100px se o header for fixo */
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 80px; /* gap abaixo do header */
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* opcional: sombra suave */
+  display: flex;
+}
+
+/* Estilização do bloco de inputs */
+.input-group {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Checkbox */
+.checkbox-label {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Alinha os itens verticalmente ao centro */
+  gap: 16px; /* Cria um espaço entre os itens */
+  width: 100%;
+}
+
+/* Opcional: Faz com que cada item na linha ocupe um espaço igual */
+.form-row > * {
+  flex: 1;
+}

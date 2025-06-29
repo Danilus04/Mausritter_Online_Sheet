@@ -1,0 +1,52 @@
+/* front/src/components/styles/ImagemInput.css */
+
+.image-input-container {
+    display: flex;
+    flex-direction: column; /* Organiza o botão e a miniatura verticalmente */
+    align-items: flex-start; /* Alinha os itens ao início */
+    gap: 10px; /* Espaço entre o botão e a miniatura */
+}
+
+.image-input-label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+  
+.image-input-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #2563eb; /* Azul */
+    color: white;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    text-align: center;
+}
+  
+.image-input-button:hover {
+    background-color: #1e40af;
+}
+  
+.image-input-hidden {
+    display: none;
+}
+
+/* Estilos para a miniatura da imagem */
+.image-preview-wrapper {
+    margin-top: 5px; /* Pequeno espaçamento acima da miniatura */
+    border: 1px solid #ddd; /* Borda sutil */
+    border-radius: 0.5rem;
+    padding: 3px;
+    background-color: #f0f0f0;
+    display: inline-block; /* Para que o wrapper não ocupe toda a largura */
+}
+
+.image-preview {
+    max-width: 100px; /* Define a largura máxima da miniatura */
+    max-height: 100px; /* Define a altura máxima da miniatura */
+    object-fit: contain; /* Garante que a imagem se ajuste sem distorção */
+    display: block; /* Remove espaços extras abaixo da imagem */
+    border-radius: 0.25rem; /* Bordas arredondadas para a imagem */
+}

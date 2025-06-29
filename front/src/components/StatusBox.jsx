@@ -1,5 +1,4 @@
-import React from 'react';
-import './StatusBox.css';
+import './styles/StatusBox.css';
 
 function StatusBox({ label, currentValue, maxValue, onChangeCurrent, onChangeMax }) {
   return (

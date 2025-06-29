@@ -1,5 +1,5 @@
 "use client";
-import "./SubmitButton.css";
+import "../styles/SubmitButton.css";
 
 export default function SubmitButton({ label = "Salvar", onClick, type = "submit" }) {
   return (
