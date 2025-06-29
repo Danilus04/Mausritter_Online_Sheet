@@ -19,23 +19,22 @@
   height: 30px;
   padding: 10px 15px;
   font-size: 16px;
-  border: 2px solid #ccc;
   border-radius: 8px;
+  border-color: #ddd;
   transition: border-color 0.3s ease;
+  background-color: #ddd;
 }
 
 .custom-input:focus {
-  border-color: #007bff;
+  border-color: #000000;
   outline: none;
 }
 
-/* Classe especial para o container do input de descrição */
 .input-descricao-grande {
-  width: 100%; /* Faz o container do input ocupar a linha toda */
+  width: 100%;
 }
 
-/* Altera a altura do campo .custom-input QUANDO ele está dentro do container .input-descricao-grande */
 .input-descricao-grande .custom-input {
   height: 90px;
-  resize: vertical; /* Opcional: permite que o usuário aumente a altura */
+  resize: vertical;
 }

@@ -16,64 +16,17 @@
 .input-group {
   padding: 10px;
   width: 100%;
-  max-width: 900px;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
 
-@media (max-width: 600px) {
-  .input-container {
-    width: 100%; /* em telas pequenas, ocupa a linha toda */
-  }
-}
-
-/* Input genérico (ajustado para inputs personalizados também) */
-.input-field {
-  flex: 1 1 250px;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #aaa;
-  font-size: 14px;
-}
-
-/* Espaçamento vertical personalizado (caso Spacer falhe) */
-.spacer {
-  height: 15px;
-}
-
 /* Checkbox */
 .checkbox-label {
-  font-size: 0.9rem;
   margin-top: 10px;
   display: flex;
-  align-items: center;
   gap: 8px;
 }
-
-/* Imagem e botão */
-.image-input-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-}
-
-.image-button {
-  background-color: #444;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-}
-
-.image-button:hover {
-  background-color: #666;
-}
-
-/* Adicione esta classe ao seu arquivo CSS */
 
 .form-row {
   display: flex;
