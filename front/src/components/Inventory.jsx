@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import api from "../apiAcess";
 import Item from "./items/Items";
-import "./styles/inventory.css";
+import "./styles/Inventory.css";
 
 function Inventory({ items, gridWidth, gridHeight }) {
   const [localItems, setLocalItems] = useState(items);
