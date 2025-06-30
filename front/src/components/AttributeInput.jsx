@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/AttributeInput.css';
+import "../components/styles/AttributeInput.css";
 
 export default function AttributeInput({ label, current, max, onChangeCurrent, onChangeMax }) {
   return (
@@ -21,3 +21,4 @@ export default function AttributeInput({ label, current, max, onChangeCurrent, o
     </li>
   );
 }
+

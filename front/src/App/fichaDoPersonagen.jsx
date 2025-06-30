@@ -4,7 +4,8 @@ import api from '../apiAcess';
 import './FichaDoPersonagem.css';
 import CharacterInventory from "../components/CharacterInventory";
 import StatusBox from "../components/StatusBox";
-
+import AttributeInput from "../components/AttributeInput";
+import ErrorMessage from "../components/ErrorMessage";
 function CharacterSheetPage() {
   const { id } = useParams();
   const [character, setCharacter] = useState(null);
@@ -48,15 +49,15 @@ function CharacterSheetPage() {
   };
 
   if (loading) return <p>Carregando ficha...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return <ErrorMessage>{error}</ErrorMessage>;
   if (!character) return null;
-  
-  //console.log('Character data:', character);
-  
+
   return (
     <div className="character-sheet">
-      <h2>Ficha: 
+      <h2>
+        Ficha:
         <input
+          className="character-name-input"
           type="text"
           value={character.nameCharacter || ''}
           onChange={(e) => handleChange('nameCharacter', e.target.value)}
@@ -96,83 +97,74 @@ function CharacterSheetPage() {
       </p>
 
       <h3>Atributos</h3>
-      <ul>
-        <li>STR: 
-          <input
-            type="number"
-            value={character.strCurrentCharacter ?? ''}
-            onChange={(e) => handleChange('strCurrentCharacter', e.target.value)}
-          /> / 
-          <input
-            type="number"
-            value={character.strMaxCharacter ?? ''}
-            onChange={(e) => handleChange('strMaxCharacter', e.target.value)}
-          />
-        </li>
-        <li>DEX: 
-          <input
-            type="number"
-            value={character.dexCurrentCharacter ?? ''}
-            onChange={(e) => handleChange('dexCurrentCharacter', e.target.value)}
-          /> / 
-          <input
-            type="number"
-            value={character.dexMaxCharacter ?? ''}
-            onChange={(e) => handleChange('dexMaxCharacter', e.target.value)}
-          />
-        </li>
-        <li>WILL: 
-          <input
-            type="number"
-            value={character.willCurrentCharacter ?? ''}
-            onChange={(e) => handleChange('willCurrentCharacter', e.target.value)}
-          /> / 
-          <input
-            type="number"
-            value={character.willMaxCharacter ?? ''}
-            onChange={(e) => handleChange('willMaxCharacter', e.target.value)}
-          />
-        </li>
+      <ul style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+        <AttributeInput
+          label="STR"
+          current={character.strCurrentCharacter}
+          max={character.strMaxCharacter}
+          onChangeCurrent={(val) => handleChange('strCurrentCharacter', val)}
+          onChangeMax={(val) => handleChange('strMaxCharacter', val)}
+        />
+        <AttributeInput
+          label="DEX"
+          current={character.dexCurrentCharacter}
+          max={character.dexMaxCharacter}
+          onChangeCurrent={(val) => handleChange('dexCurrentCharacter', val)}
+          onChangeMax={(val) => handleChange('dexMaxCharacter', val)}
+        />
+        <AttributeInput
+          label="WILL"
+          current={character.willCurrentCharacter}
+          max={character.willMaxCharacter}
+          onChangeCurrent={(val) => handleChange('willCurrentCharacter', val)}
+          onChangeMax={(val) => handleChange('willMaxCharacter', val)}
+        />
       </ul>
-
+      <div className="status-container">
       <h3>Vida</h3>
-      <StatusBox
-        label={'HP'}
+        <StatusBox
+        label="HP"
         currentValue={character.hpCurrentCharacter}
         maxValue={character.hpMaxCharacter}
         onChangeCurrent={(value) => handleChange('hpCurrentCharacter', value)}
-        onChangeMax={(value) => handleChange('hpMaxCharacter', value)}
-      />
-
+        onChangeMax={(value) => handleChange('hpMaxCharacter', value)} />
+      </div>
       <h3>Outros</h3>
-      <p>Pips: 
-        <input
-          type="number"
-          value={character.pipsCharacter ?? ''}
-          onChange={(e) => handleChange('pipsCharacter', e.target.value)}
-        />
-      </p>
-      <p>Level: 
-        <input
-          type="number"
-          value={character.levelCharacter ?? ''}
-          onChange={(e) => handleChange('levelCharacter', e.target.value)}
-        />
-      </p>
-      <p>XP: 
-        <input
-          type="number"
-          value={character.xpCharacter ?? ''}
-          onChange={(e) => handleChange('xpCharacter', e.target.value)}
-        />
-      </p>
-      <p>Grit: 
-        <input
-          type="number"
-          value={character.gritCharacter ?? ''}
-          onChange={(e) => handleChange('gritCharacter', e.target.value)}
-        />
-      </p>
+      <div className="other-fields">
+      <div className="other-field">
+      <label>Pips:</label>
+      <input
+        type="number"
+        value={character.pipsCharacter ?? ''}
+        onChange={(e) => handleChange('pipsCharacter', Number(e.target.value))}
+      />
+      </div>
+      <div className="other-field">
+      <label>Level:</label>
+      <input
+      type="number"
+      value={character.levelCharacter ?? ''}
+      onChange={(e) => handleChange('levelCharacter', Number(e.target.value))}
+      />
+      </div>
+      <div className="other-field">
+      <label>XP:</label>
+      <input
+        type="number"
+        value={character.xpCharacter ?? ''}
+        onChange={(e) => handleChange('xpCharacter', Number(e.target.value))}
+      />
+      </div>
+      <div className="other-field">
+      <label>Grit:</label>
+      <input
+        type="number"
+        value={character.gritCharacter ?? ''}
+        onChange={(e) => handleChange('gritCharacter', Number(e.target.value))}
+      />
+      </div>
+      </div>
+
 
       <button onClick={handleSave} disabled={saving}>
         {saving ? 'Salvando...' : 'Salvar Ficha'}

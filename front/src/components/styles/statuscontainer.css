@@ -1,0 +1,7 @@
+.status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centraliza horizontalmente */
+    gap: 0.5rem; /* espaço entre o h3 e o StatusBox */
+  }
+  
