@@ -12,15 +12,19 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserItemSerializer(serializers.ModelSerializer):
-    item_base = ItemSerializer(read_only=True)
+    item_base = ItemSerializer(read_only=True)  # usado no GET
+    item_base_id = serializers.PrimaryKeyRelatedField(  # usado no POST/PUT
+        queryset=Item.objects.all(), write_only=True, source='item_base'
+    )
     character_sheet = serializers.PrimaryKeyRelatedField(queryset=CharacterSheet.objects.all())
 
     class Meta:
         model = UserItem
         fields = [
             'id',
-            'character_sheet',   # Agora vinculado à ficha
-            'item_base',
+            'character_sheet',
+            'item_base',        # leitura
+            'item_base_id',     # escrita
             'quantity',
             'currentUsageSquare',
             'PositionX',
