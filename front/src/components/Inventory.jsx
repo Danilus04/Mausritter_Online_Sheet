@@ -73,6 +73,7 @@ function Inventory({ items, gridWidth, gridHeight }) {
         .put(`/characters/items/${draggingItem.id}/`, {
           PositionX: null,
           PositionY: null,
+          item_base_id: draggingItem.id,
           character_sheet: draggingItem.character_sheet,
         })
         .then((response) => {
