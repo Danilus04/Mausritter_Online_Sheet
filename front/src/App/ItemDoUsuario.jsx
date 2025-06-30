@@ -4,10 +4,12 @@ import api from "../apiAcess";
 import Item from "../components/items/Items";
 import Menu from "../components/Menu";
 
-function Ficha() {
+function ItemsDoUsuario() {
   const [itens, setItens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
+  const [characterSheets, setCharacterSheets] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const [menuData, setMenuData] = useState(null);
   const menuRef = useRef(null);
@@ -37,6 +39,14 @@ function Ficha() {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [menuData]);
 
+  useEffect(() => {
+  if (menuData) {
+    api.get('/user/characters/')
+      .then(response => setCharacterSheets(response.data))
+      .catch(error => console.error('Erro ao carregar fichas:', error));
+  }
+  }, [menuData]);
+  
   const handleDelete = (item) => {
     api
       .delete(`/item/${item.idSquare}/`)
@@ -48,6 +58,29 @@ function Ficha() {
         alert("Erro ao deletar item.");
       });
   };
+
+  const handleAddToCharacter = (charId, charName, item) => {
+    const payload = {
+      character_sheet: charId,
+      item_base_id: item.idSquare,
+      quantity: 1,
+      currentUsageSquare: item.currentUsageSquare ?? item.maxUsageSquare ?? null,
+      PositionX: null,
+      PositionY: null,
+    };
+
+    api.post(`/characters/items/`, payload)
+      .then(() => {
+        alert(`Item adicionado à ficha ${charName}`);
+        setShowDropdown(false);
+        //onClose();
+      })
+      .catch(() => {
+        alert('Erro ao adicionar item à ficha');
+        setShowDropdown(false);
+    });
+  };
+
 
   const handleItemClick = (event, item) => {
     event.stopPropagation();
@@ -83,7 +116,7 @@ function Ficha() {
 
   return (
     <div>
-      <h2>Itens da Ficha</h2>
+      <h2>Meus Items</h2>
 
       <div>
         <button
@@ -185,6 +218,28 @@ function Ficha() {
 
       {menuData && (
         <Menu ref={menuRef} top={menuData.top} left={menuData.left} onClose={() => setMenuData(null)}>
+          <button onClick={() => setShowDropdown(prev => !prev)}>
+            Adicionar a...
+          </button>
+
+          {showDropdown && (
+            <div>
+              {characterSheets.length === 0 ? (
+                <div >Nenhum personagem</div>
+              ) : (
+                characterSheets.map((char) => (
+                  <div
+                    key={char.id}
+                    
+                    onClick={() => handleAddToCharacter(char.id, char.nameCharacter, menuData.item)}
+                  >
+                    {char.nameCharacter || `Ficha ${char.id}`}
+                  </div>
+                ))
+              )}
+            </div>
+          )} 
+
           <button
             onClick={() => {
               // 1. Fecha o menu de contexto
@@ -243,6 +298,7 @@ function Ficha() {
           >
             Exportar
           </button>
+          
           <button
             onClick={() => {
               handleDelete(menuData.item);
@@ -257,4 +313,4 @@ function Ficha() {
   );
 }
 
-export default Ficha;
+export default ItemsDoUsuario;

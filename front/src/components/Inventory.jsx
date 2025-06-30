@@ -34,6 +34,7 @@ function Inventory({ items, gridWidth, gridHeight }) {
 
     api
       .put(`/characters/items/${draggingItem.id}/`, {
+        item_base_id : draggingItem.id,
         PositionX: targetX,
         PositionY: targetY,
         character_sheet: draggingItem.character_sheet,
