@@ -84,6 +84,89 @@ function Ficha() {
   return (
     <div>
       <h2>Itens da Ficha</h2>
+
+      <div>
+        <button
+          onClick={() => {
+            // Cria um input de arquivo temporário e simula um clique nele
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.json'; // Aceita apenas arquivos JSON
+            fileInput.onchange = async (event) => {
+              const file = event.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                  try {
+                    const jsonContent = JSON.parse(e.target.result);
+
+                    // Validação básica para garantir que o JSON tem as propriedades esperadas
+                    // Adapte esta validação conforme a estrutura esperada do seu JSON
+                    if (!jsonContent.nameSquare || !jsonContent.widthSquare || !jsonContent.heightSquare) {
+                      alert("O arquivo JSON não parece ser um item válido. Faltam propriedades essenciais.");
+                      return;
+                    }
+
+                    // Prepara o payload para enviar ao backend
+                    // Certifique-se de que todos os campos esperados pelo seu serializer estejam aqui
+                    let payload = {
+                      nameSquare: jsonContent.nameSquare || "Item sem nome",
+                      widthSquare: jsonContent.widthSquare || 1,
+                      heightSquare: jsonContent.heightSquare || 1,
+                      descriptionSquare: jsonContent.descriptionSquare || "", // Adicione defaults se o campo pode faltar no JSON
+                      effectDescription: jsonContent.effectDescription || "",
+                      typeSquare: jsonContent.typeSquare || "",
+                      imageSquare: jsonContent.imageSquare || null,
+                      worthSquare: jsonContent.worthSquare || 0,
+                      currentUsageSquare: jsonContent.currentUsageSquare || 0,
+                      maxUsageSquare: jsonContent.maxUsageSquare || 0,
+                      tagSquare: jsonContent.tagSquare || 0,
+                      damage1Square: jsonContent.damage1Square || 0,
+                      damage2Square: jsonContent.damage2Square || 0,
+                      valueArmorSquare: jsonContent.valueArmorSquare || 0,
+                      conditionEffectSquare: jsonContent.conditionEffectSquare || 0,
+                      usageTypeSquare: jsonContent.usageTypeSquare || 0,
+                      isMagical: jsonContent.isMagical || false,
+                      pesoSquare: jsonContent.pesoSquare || 0,
+                    };
+
+                    try {
+                      // Envia os dados para a sua API de criação de item
+                      const response = await api.post("item/", payload, {
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      });
+
+                      if (response.status === 201) {
+                        alert("Item importado e criado com sucesso!");
+                        window.location.reload(); // Recarrega a página
+                      } else {
+                        alert(`Erro ao importar item: ${response.statusText || response.data}`);
+                      }
+                    } catch (error) {
+                      console.error("Falha na comunicação com o servidor:", error);
+                      alert("Falha ao conectar com o servidor ou dados inválidos.");
+                    }
+
+                  } catch (parseError) {
+                    alert("Erro ao ler o arquivo JSON. Certifique-se de que é um JSON válido.");
+                    console.error("Erro de parse JSON:", parseError);
+                  }
+                };
+                reader.readAsText(file); // Lê o conteúdo do arquivo como texto
+              }
+            };
+            fileInput.click(); // Abre a janela de seleção de arquivo
+            setMenuData(null); // Fecha o menu, se aplicável
+          }}
+        >
+          Importar Item
+        </button>
+      </div>
+      
+      <br></br>
+
       <div style={containerStyle}>
         {itens.length > 0 ? (
           itens.map((item) => (
@@ -102,6 +185,64 @@ function Ficha() {
 
       {menuData && (
         <Menu ref={menuRef} top={menuData.top} left={menuData.left} onClose={() => setMenuData(null)}>
+          <button
+            onClick={() => {
+              // 1. Fecha o menu de contexto
+              setMenuData(null);
+
+              // Verifica se há dados do item para exportar
+              if (menuData && menuData.item) {
+                // 2. Extrai os dados do item
+                const itemToExport = {
+                  idSquare: menuData.item.idSquare, // Inclua o ID se for relevante para o export
+                  nameSquare: menuData.item.nameSquare,
+                  widthSquare: menuData.item.widthSquare,
+                  heightSquare: menuData.item.heightSquare,
+                  descriptionSquare: menuData.item.descriptionSquare,
+                  effectDescription: menuData.item.effectDescription,
+                  typeSquare: menuData.item.typeSquare,
+                  imageSquare: menuData.item.imageSquare,
+                  worthSquare: menuData.item.worthSquare,
+                  currentUsageSquare: menuData.item.currentUsageSquare,
+                  maxUsageSquare: menuData.item.maxUsageSquare,
+                  tagSquare: menuData.item.tagSquare,
+                  damage1Square: menuData.item.damage1Square,
+                  damage2Square: menuData.item.damage2Square,
+                  valueArmorSquare: menuData.item.valueArmorSquare,
+                  conditionEffectSquare: menuData.item.conditionEffectSquare,
+                  usageTypeSquare: menuData.item.usageTypeSquare,
+                  isMagical: menuData.item.isMagical,
+                  pesoSquare: menuData.item.pesoSquare,
+                };
+
+                // 3. Converte o objeto JavaScript em uma string JSON formatada
+                const jsonString = JSON.stringify(itemToExport, null, 2); // 'null, 2' para formatação legível
+
+                // 4. Cria um Blob a partir da string JSON com o tipo MIME correto
+                const blob = new Blob([jsonString], { type: 'application/json' });
+
+                // 5. Cria uma URL de objeto para o Blob
+                const url = URL.createObjectURL(blob);
+
+                // 6. Cria um link temporário para acionar o download
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${itemToExport.nameSquare || 'item'}.json`; // Nome do arquivo
+
+                // 7. Simula um clique no link para iniciar o download
+                document.body.appendChild(link); // Adiciona o link ao DOM (necessário para Firefox)
+                link.click();
+
+                // 8. Limpa o URL do objeto após o download
+                document.body.removeChild(link); // Remove o link
+                URL.revokeObjectURL(url); // Libera a URL do objeto
+              } else {
+                alert("Nenhum item selecionado para exportar.");
+              }
+            }}
+          >
+            Exportar
+          </button>
           <button
             onClick={() => {
               handleDelete(menuData.item);

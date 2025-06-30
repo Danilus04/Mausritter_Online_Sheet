@@ -14,6 +14,11 @@ from rest_framework.permissions import IsAuthenticated
 class ItemListCreateAPIView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [IsAuthenticated] # Garante que apenas usuários autenticados possam criar
+
+    def perform_create(self, serializer):
+        # Associa o item ao usuário logado (request.user) antes de salvar
+        serializer.save(user=self.request.user)
 
 # Endpoint: GET /items/<id>/, PUT /items/<id>/, DELETE /items/<id>/
 class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):

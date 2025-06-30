@@ -1,6 +1,7 @@
 // src/App/ItensDefault.jsx
 
 import { useEffect, useRef, useState } from "react";
+import api from "../apiAcess";
 import Item from "../components/items/Items";
 import Menu from "../components/Menu";
 
@@ -55,9 +56,9 @@ function ItensDefault() {
           currentUsageSquare: d.data?.pips?.value || 0,
           maxUsageSquare: d.data?.pips?.max || 0,
           tagSquare: d.data?.tag || 0,
-          damage1Square: d.data?.weapon?.dm1 || 0,
-          damage2Square: d.data?.weapon?.dm2 || 0,
-          valueArmor: d.data?.armor?.value || 0,
+          damage1Square: d.data?.weapon?.dmg1 || 0,
+          damage2Square: d.data?.weapon?.dmg2 || 0,
+          valueArmorSquare: d.data?.armor?.value || 0,
           conditionEffectSquare: d.data?.desc || 0,
           usageTypeSquare: d.data?.clear || 0,
           isMagical: d.data?.isSpell || false,
@@ -168,9 +169,47 @@ function ItensDefault() {
       {menuData && (
         <Menu ref={menuRef} top={menuData.top} left={menuData.left} onClose={() => setMenuData(null)}>
           <button
-            onClick={() => {
-              console.log("Importando:", menuData.item.nameSquare);
-              onClose();
+            onClick={async () => {
+              let payload = {
+                nameSquare: menuData.item.nameSquare,
+                widthSquare: menuData.item.widthSquare,
+                heightSquare: menuData.item.heightSquare,
+                descriptionSquare: menuData.item.descriptionSquare,
+                effectDescription: menuData.item.effectDescription.join(", "),
+                typeSquare: menuData.item.typeSquare,
+                imageSquare: menuData.item.imageSquare,
+                worthSquare: menuData.item.worthSquare,
+                currentUsageSquare: menuData.item.currentUsageSquare,
+                maxUsageSquare: menuData.item.maxUsageSquare,
+                tagSquare: menuData.item.tagSquare,
+                damage1Square: menuData.item.damage1Square,
+                damage2Square: menuData.item.damage2Square,
+                valueArmorSquare: menuData.item.valueArmorSquare,
+                conditionEffectSquare: menuData.item.conditionEffectSquare,
+                usageTypeSquare: menuData.item.usageTypeSquare,
+                isMagical: menuData.item.isMagical,
+                pesoSquare: menuData.item.pesoSquare,
+              };
+
+              try {
+                const response = await api.post("item/", payload, {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
+
+                if (response.status === 201) {
+                  //alert("Item importado com sucesso!");
+                } else {
+                  alert(`Erro ao criar item: ${response.statusText}`);
+                }
+
+              } catch (error) {
+                console.error("Falha na comunicação com o servidor:", error);
+                alert("Falha ao conectar com o servidor.");
+              }
+
+              //onClose();
             }}
           >
             Import
