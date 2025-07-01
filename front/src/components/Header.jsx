@@ -33,7 +33,14 @@ function Header() {
             <div>Nenhum personagem</div>
           ) : (
             characters.map(char => (
-              <Link key={char.id} to={`/characters/${char.id}/`}>
+              <Link
+                key={char.id}
+                to={`/characters/${char.id}/`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = `/characters/${char.id}/`;
+                }}
+              >
                 {char.nameCharacter || `ID ${char.id}`}
               </Link>
             ))

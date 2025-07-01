@@ -1,6 +1,6 @@
 // src/App.jsx
 import "./App.css";
-import Ficha from "./App/ficha";
+import ItemsDoUsuario from "./App/ItemDoUsuario";
 import CharacterSheetPage from "./App/fichaDoPersonagen"; // Importa a página de ficha do personagem
 import ItensDefault from "./App/ItensDefault";
 import Header from "./components/Header";
@@ -52,7 +52,7 @@ function AppLayout() {
           path="/ficha"
           element={
             <ProtectedRoute>
-              <Ficha />
+              <ItemsDoUsuario />
             </ProtectedRoute>
           }
         />
