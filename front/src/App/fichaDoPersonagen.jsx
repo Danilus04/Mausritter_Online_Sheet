@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../apiAcess';
 import './FichaDoPersonagem.css';
+import OffGridItemManager from '../components/OffGridItemManager';
 import CharacterInventory from "../components/CharacterInventory";
 import StatusBox from "../components/StatusBox";
 
@@ -179,6 +180,7 @@ function CharacterSheetPage() {
       </button>
 
       <CharacterInventory characterId={id} />
+      <OffGridItemManager characterId={id} />
     </div>
   );
 }

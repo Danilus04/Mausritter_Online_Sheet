@@ -30,18 +30,16 @@ function Inventory({ items, gridWidth, gridHeight }) {
       setDraggingItem(null);
       return; // Cancela o drop
     }
-    console.log(draggingItem.character_sheet);
 
+    //console.log("Posição atualizada com sucesso:", draggingItem);
     api
       .put(`/characters/items/${draggingItem.id}/`, {
-        item_base_id : draggingItem.id,
+        item_base_id : draggingItem.item_base_id,
         PositionX: targetX,
         PositionY: targetY,
         character_sheet: draggingItem.character_sheet,
       })
       .then((response) => {
-        console.log("Posição atualizada com sucesso:", response.data);
-
         const updatedItems = localItems.map((it) => {
           if (it === draggingItem) {
             return { ...it, positionX: targetX, positionY: targetY };
@@ -73,10 +71,11 @@ function Inventory({ items, gridWidth, gridHeight }) {
         .put(`/characters/items/${draggingItem.id}/`, {
           PositionX: null,
           PositionY: null,
-          item_base_id: draggingItem.id,
+          item_base_id: draggingItem.item_base_id,
           character_sheet: draggingItem.character_sheet,
         })
         .then((response) => {
+          window.location.reload();
           console.log("Item removido do grid com sucesso:", response.data);
 
           const updatedItems = localItems.map((it) => {
@@ -120,7 +119,6 @@ function Inventory({ items, gridWidth, gridHeight }) {
       );
     }
   }
-
   return (
     <div
       ref={inventoryRef}
