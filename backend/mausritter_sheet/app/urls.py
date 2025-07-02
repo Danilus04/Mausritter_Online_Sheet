@@ -1,5 +1,14 @@
 from django.urls import path
-from .views import ItemListCreateAPIView, ItemRetrieveUpdateDestroyAPIView, UserItemRetrieveUpdateDestroyAPIView, UserItemListCreateAPIView, RegisterUserAPIView, CharacterSheetRetrieveUpdateDestroyAPIView, UserCharacterSheetsView, CharacterSheetItemsListAPIView
+from .views import (
+    ItemListCreateAPIView,
+    ItemRetrieveUpdateDestroyAPIView,
+    UserItemRetrieveUpdateDestroyAPIView,
+    UserItemListCreateAPIView,
+    RegisterUserAPIView,
+    CharacterSheetRetrieveUpdateDestroyAPIView,
+    UserCharacterSheetsView,
+    CharacterSheetItemsListAPIView
+)
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -22,10 +31,11 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # Endpoint especial: Listar fichas de personagem de um usuário
-    path('user/characters/<int:user_id>', UserCharacterSheetsView.as_view(), name='user-character-sheets'),
+    # urls.py
+    path('user/characters/', UserCharacterSheetsView.as_view(), name='user-character-sheets'),
+
 
     # Endpoint de detalhe / update / delete por ID da ficha
     path('characters/<int:pk>/', CharacterSheetRetrieveUpdateDestroyAPIView.as_view(), name='character-detail'),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

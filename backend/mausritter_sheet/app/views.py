@@ -4,15 +4,21 @@ from rest_framework import status
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import ItemSerializer, UserItemSerializer, UserSerializer, UserRegisterSerializer, CharacterSheetSerializer
+from .serializers import ItemSerializer, UserItemSerializer, UserRegisterSerializer, CharacterSheetSerializer
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate
 from .models import Item, UserItem, CharacterSheet
+from rest_framework.permissions import IsAuthenticated
 
 # Endpoint: GET /items/, POST /items/
 class ItemListCreateAPIView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [IsAuthenticated] # Garante que apenas usuários autenticados possam criar
+
+    def perform_create(self, serializer):
+        # Associa o item ao usuário logado (request.user) antes de salvar
+        serializer.save(user=self.request.user)
 
 # Endpoint: GET /items/<id>/, PUT /items/<id>/, DELETE /items/<id>/
 class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -33,8 +39,21 @@ class CharacterSheetItemsListAPIView(generics.ListAPIView):
     def get_queryset(self):
         character_id = self.kwargs['character_id']
         return UserItem.objects.filter(character_sheet__id=character_id)
+    
+class CharacterSheetRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CharacterSheet.objects.all()
+    serializer_class = CharacterSheetSerializer
 
-class LoginView(APIView):
+class UserCharacterSheetsView(generics.ListAPIView):
+    serializer_class = CharacterSheetSerializer
+    permission_classes = [IsAuthenticated]  # Garante que só usuários autenticados acessem
+
+    def get_queryset(self):
+        return CharacterSheet.objects.filter(user=self.request.user)
+
+class RegisterUserAPIView(APIView):
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():

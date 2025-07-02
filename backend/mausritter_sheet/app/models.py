@@ -31,6 +31,8 @@ class CharacterSheet(models.Model):
         return f'{self.nameCharacter} (User: {self.user.username})'
 
 class Item(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='item', null=True, blank=True)
+
     idSquare = models.AutoField(primary_key=True)
     nameSquare = models.CharField(max_length=100)
     colorSquare = models.CharField(max_length=45, blank=True, null=True)
