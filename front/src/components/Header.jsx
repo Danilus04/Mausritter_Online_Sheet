@@ -1,44 +1,66 @@
-// src/components/Header.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../apiAcess"; // Importa a instância do axios configurada
+import "./styles/Header.css"; // no topo
 
 function Header() {
   const navigate = useNavigate();
+  const [characters, setCharacters] = useState([]);
 
   const handleLogout = () => {
-    localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
-    navigate('/');
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    navigate("/");
   };
 
+  useEffect(() => {
+    api
+      .get("user/characters") // rota corrigida para listar do usuário autenticado
+      .then((response) => setCharacters(response.data))
+      .catch((error) => console.error("Erro ao buscar personagens:", error));
+  }, []);
+
   return (
-    <header style={styles.header}>
-      <h2 style={styles.title}>Mausritter App</h2>
-      <button onClick={handleLogout} style={styles.button}>Logout</button>
+    <header className="header">
+      <div className="header-content">
+        <div className="nav-left">
+          <Link to="/ficha" className="link">
+            Ficha
+          </Link>
+          <Link to="/itens" className="link">
+            Itens
+          </Link>
+          <Link to="/item/create" className="link">
+            Criar Item
+          </Link>
+          <div className="dropdown">
+            <span className="link">Personagens ▾</span>
+            <div className="dropdown-content">
+              {characters.length === 0 ? (
+                <div>Nenhum personagem</div>
+              ) : (
+                characters.map((char) => (
+                  <Link
+                    key={char.id}
+                    to={`/characters/${char.id}/`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location.href = `/characters/${char.id}/`;
+                    }}
+                  >
+                    {char.nameCharacter || `ID ${char.id}`}
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+        <button onClick={handleLogout} className="button-logout">
+          Logout
+        </button>
+      </div>
     </header>
   );
 }
-
-const styles = {
-  header: {
-    backgroundColor: '#222',
-    color: 'white',
-    padding: '10px 20px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  title: {
-    margin: 0,
-  },
-  button: {
-    backgroundColor: '#cc0000',
-    color: 'white',
-    padding: '8px 12px',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  }
-};
 
 export default Header;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Inventory from "../components/Inventory";
 import api from '../apiAcess';
 
@@ -23,13 +23,15 @@ const CharacterInventory = ({ characterId }) => {
   if (loading) return <p>Carregando inventário...</p>;
   if (erro) return <p>{erro}</p>;
 
+  console.log("Itens do personagem:", itens);
   const mappedItems = itens.map(item => ({
     id: item.id,
+    item_base_id: item.item_base.idSquare,
     character_sheet: item.character_sheet,
     nameSquare: item.item_base.nameSquare,
     widthSquare: item.item_base.widthSquare,
     heightSquare: item.item_base.heightSquare,
-    imageSquare: item.item_base.imageSquare || null,
+    imageSquare: `/${item.item_base.imageSquare} ` || null,
     maxUsageSquare: item.item_base.maxUsageSquare,
     currentUsageSquare: item.currentUsageSquare ?? item.item_base.currentUsageSquare,
     positionX: item.PositionX,

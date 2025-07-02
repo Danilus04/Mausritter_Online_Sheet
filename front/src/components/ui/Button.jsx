@@ -1,7 +1,7 @@
 "use client";
-import "./SubmitButton.css";
+import "../styles/Button.css";
 
-export default function SubmitButton({ label = "Salvar", onClick, type = "submit" }) {
+export default function Button({ label = "Salvar", onClick, type = "submit" }) {
   return (
     <div className="submit-button-container">
       <button type={type} className="submit-button" onClick={onClick}>
