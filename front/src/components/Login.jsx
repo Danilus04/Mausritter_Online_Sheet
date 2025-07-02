@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/Login.css';
-import api from '../apiAcess'; 
-
+import api from '../apiAcess';
+import SubmitButton from "../components/ui/SubmitButton";
+import Spacer from "../components/ui/Spacer"
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-
+  const irParaRegistro = () => {
+    navigate("/register");
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -63,6 +66,8 @@ function Login() {
           />
         </div>
         <button type="submit" className="button">Entrar</button>
+        <Spacer size={10} />
+        <SubmitButton label="Criar Conta" onClick={irParaRegistro}/>
       </form>
       {message && <p className="message">{message}</p>}
     </div>
