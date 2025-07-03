@@ -5,6 +5,7 @@ class CharacterSheetSerializer(serializers.ModelSerializer):
     class Meta:
         model = CharacterSheet
         fields = '__all__'
+        read_only_fields = ['user']  # Garante que o usuário não possa ser modificado diretamente
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:

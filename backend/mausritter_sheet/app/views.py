@@ -37,6 +37,14 @@ class UserItemListCreateAPIView(generics.ListCreateAPIView):
     queryset = UserItem.objects.all()
     serializer_class = UserItemSerializer
 
+class CharacterSheetCreateView(generics.CreateAPIView):
+    queryset = CharacterSheet.objects.all()
+    serializer_class = CharacterSheetSerializer
+    permission_classes = [IsAuthenticated]
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
 class CharacterSheetItemsListAPIView(generics.ListAPIView):
     serializer_class = UserItemSerializer
 

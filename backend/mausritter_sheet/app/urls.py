@@ -7,7 +7,8 @@ from .views import (
     RegisterUserAPIView,
     CharacterSheetRetrieveUpdateDestroyAPIView,
     UserCharacterSheetsView,
-    CharacterSheetItemsListAPIView
+    CharacterSheetItemsListAPIView,
+    CharacterSheetCreateView
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -17,6 +18,9 @@ urlpatterns = [
     path('item/', ItemListCreateAPIView.as_view(), name='item-list-create'),         # /items/
     path('item/<int:pk>/', ItemRetrieveUpdateDestroyAPIView.as_view(), name='item-detail'),  # /items/1/
     
+    # Criação do personagem
+    path('characters/', CharacterSheetCreateView.as_view(), name='character-create'),  # /characters/
+
     # CRUD individual de item
     path('characters/items/<int:pk>/', UserItemRetrieveUpdateDestroyAPIView.as_view(), name='user-item-detail'),
     
