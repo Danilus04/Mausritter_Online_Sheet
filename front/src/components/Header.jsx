@@ -13,6 +13,18 @@ function Header() {
     navigate("/");
   };
 
+  const handleCreateCharacter = () => {
+    api.post("/characters/", {})  // Cria personagem com todos os campos como null
+      .then((response) => {
+        const newChar = response.data;
+        navigate(`/characters/${newChar.id}/`);
+      })
+      .catch((err) => {
+        console.error("Erro ao criar personagem:", err);
+        alert("Erro ao criar personagem.");
+      });
+  };
+
   useEffect(() => {
     api
       .get("user/characters") // rota corrigida para listar do usuário autenticado
@@ -25,7 +37,7 @@ function Header() {
       <div className="header-content">
         <div className="nav-left">
           <Link to="/ficha" className="link">
-            Ficha
+            Meus Itens
           </Link>
           <Link to="/itens" className="link">
             Itens
@@ -52,6 +64,12 @@ function Header() {
                   </Link>
                 ))
               )}
+              <button
+                onClick={handleCreateCharacter}
+                className="link"
+              >
+                + Criar novo personagem
+              </button>
             </div>
           </div>
         </div>

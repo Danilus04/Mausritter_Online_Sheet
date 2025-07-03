@@ -23,7 +23,7 @@ const CharacterInventory = ({ characterId }) => {
   if (loading) return <p>Carregando inventário...</p>;
   if (erro) return <p>{erro}</p>;
 
-  console.log("Itens do personagem:", itens);
+  //console.log("Itens do personagem:", itens);
   const mappedItems = itens.map(item => ({
     id: item.id,
     item_base_id: item.item_base.idSquare,
