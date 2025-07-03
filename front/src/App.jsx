@@ -40,14 +40,14 @@ function AppLayout() {
           }
         />
         <Route
-          path="/item/update/"
+          path="/item/update/:id"
           element={
             <ProtectedRoute>
-              {/* ITEM UPDATE nÃO VEM COM ID TEM QUE RESOLVER ISSO AI!!!! DEIXAREI PADRÃO ITEM 1 PARA ALTERAR */}
               <ItemPageUpdate />
             </ProtectedRoute>
           }
-        ></Route>
+        />
+
         <Route
           path="/ficha"
           element={

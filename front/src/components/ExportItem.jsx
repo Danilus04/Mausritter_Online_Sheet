@@ -20,5 +20,5 @@ export default function ExportButton({ item, onClose }) {
     URL.revokeObjectURL(url);
   };
 
-  return <Button label="Exportar" onClick={handleExport} />;
+  return <Button className="menu-button" label="Exportar" onClick={handleExport} />;
 }

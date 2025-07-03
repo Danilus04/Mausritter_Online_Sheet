@@ -6,5 +6,5 @@ export default function DeleteButton({ item, onDelete, onClose }) {
     onClose();
   };
 
-  return <Button label="Deletar" onClick={handleDelete} />;
+  return <Button className="menu-button" label="Deletar" onClick={handleDelete} />;
 }

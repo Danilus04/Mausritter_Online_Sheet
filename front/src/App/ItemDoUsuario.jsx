@@ -124,10 +124,17 @@ function ItemsDoUsuario() {
 
       {menuData && (
         <Menu ref={menuRef} top={menuData.top} left={menuData.left} onClose={() => setMenuData(null)}>
-          <Button label="Adicionar a..." onClick={() => setShowDropdown((prev) => !prev)} />
+          <Button className="menu-button" label="Adicionar a..." onClick={() => setShowDropdown((prev) => !prev)} />
           <AddToCharacterDropdown show={showDropdown} characters={characterSheets} item={menuData.item} onAdd={handleAddToCharacter} />
           <ExportButton item={menuData.item} onClose={() => setMenuData(null)} />
           <DeleteButton item={menuData.item} onDelete={handleDelete} onClose={() => setMenuData(null)} />
+          <Button
+            className="menu-button"
+            label="Editar item"
+            onClick={() => {
+              window.location.href = `/item/update/${menuData.item.idSquare}`;
+            }}
+          />
         </Menu>
       )}
     </div>
