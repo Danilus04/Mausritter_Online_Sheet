@@ -16,8 +16,8 @@
 
 .status-label {
   font-weight: bold;
-  background-color: #DDDDDD;
-  font-family: 'UnifrakturCook', cursive;
+  background-color: #dddddd;
+  font-family: "UnifrakturCook", cursive;
   font-size: 1.1rem;
   letter-spacing: 1px;
   padding: 6px 16px;
@@ -30,7 +30,7 @@
   text-align: center;
   width: 60px;
   font-family: monospace;
-  color:black;
+  color: black;
   font-size: larger;
 }
 
