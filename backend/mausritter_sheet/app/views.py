@@ -15,6 +15,10 @@ class ItemListCreateAPIView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticated] # Garante que apenas usuários autenticados possam criar
+    
+    def get_queryset(self):
+        # Retorna apenas os itens do usuário autenticado
+        return Item.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         # Associa o item ao usuário logado (request.user) antes de salvar
