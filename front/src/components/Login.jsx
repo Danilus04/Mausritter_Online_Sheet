@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../apiAcess";
 import "./styles/Login.css";
+import { Link } from "react-router-dom";
+
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -57,6 +59,10 @@ function Login() {
         </button>
       </form>
       {message && <p className="message">{message}</p>}
+      <br />
+      <Link to="/register" className="RegisterLink">
+        Registrar-se
+      </Link>
     </div>
   );
 }
