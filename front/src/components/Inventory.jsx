@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import api from "../apiAcess";
 import Item from "./items/Items";
-import "./styles/Inventory.css";
+import "./styles/inventory.css";
 
 function Inventory({ items, gridWidth, gridHeight }) {
   const [localItems, setLocalItems] = useState(items);
@@ -9,39 +9,57 @@ function Inventory({ items, gridWidth, gridHeight }) {
   const inventoryRef = useRef(null);
 
   const handleDragStart = (e, item) => {
+    console.log("[DragStart] Iniciando com item:", item);
     setDraggingItem(item);
   };
 
   const handleDragOver = (e) => {
-    e.preventDefault(); // Permite o drop
+    e.preventDefault();
+    // Esse log confirma que o grid está aceitando drag
+    console.log("[DragOver] Mouse sobre célula do grid");
   };
 
   const handleDrop = (e, targetX, targetY) => {
-    if (!draggingItem) return;
+    console.log("[Drop] Tentativa de soltar item em:", targetX, targetY);
 
-    // Verificação de limite de grid
+    if (!draggingItem) {
+      // Tenta pegar do dataTransfer (caso o item tenha vindo de fora do inventário)
+      const raw = e.dataTransfer.getData("application/json");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        console.log("[Drop] Item vindo do dataTransfer:", parsed);
+        setDraggingItem(parsed);
+        return; // Deixe o estado se atualizar antes de continuar
+      }
+
+      console.warn("[Drop] Nenhum item sendo arrastado.");
+      return;
+    }
+
     const itemWidth = draggingItem.widthSquare;
     const itemHeight = draggingItem.heightSquare;
 
     const isOutOfBounds = targetX < 0 || targetY < 0 || targetX + itemWidth > gridWidth || targetY + itemHeight > gridHeight;
 
     if (isOutOfBounds) {
-      console.warn("Item não pode ser posicionado fora dos limites do grid.");
+      console.warn("[Drop] Fora dos limites do grid");
       setDraggingItem(null);
-      return; // Cancela o drop
+      return;
     }
 
-    //console.log("Posição atualizada com sucesso:", draggingItem);
+    console.log("[Drop] Enviando atualização para o item:", draggingItem);
+
     api
       .put(`/characters/items/${draggingItem.id}/`, {
-        item_base_id : draggingItem.item_base_id,
+        item_base_id: draggingItem.item_base_id,
         PositionX: targetX,
         PositionY: targetY,
         character_sheet: draggingItem.character_sheet,
       })
       .then((response) => {
+        console.log("[Drop] Atualização bem-sucedida:", response.data);
         const updatedItems = localItems.map((it) => {
-          if (it === draggingItem) {
+          if (it.id === draggingItem.id) {
             return { ...it, positionX: targetX, positionY: targetY };
           }
           return it;
@@ -51,12 +69,13 @@ function Inventory({ items, gridWidth, gridHeight }) {
         setDraggingItem(null);
       })
       .catch((error) => {
-        console.error("Erro ao atualizar posição:", error);
+        console.error("[Drop] Erro ao atualizar posição:", error);
         setDraggingItem(null);
       });
   };
 
   const handleDragEnd = (e) => {
+    console.log("[DragEnd] Finalizando drag");
     if (!draggingItem) return;
 
     const inventoryRect = inventoryRef.current.getBoundingClientRect();
@@ -67,6 +86,7 @@ function Inventory({ items, gridWidth, gridHeight }) {
       mouseX >= inventoryRect.left && mouseX <= inventoryRect.right && mouseY >= inventoryRect.top && mouseY <= inventoryRect.bottom;
 
     if (!isInsideGrid) {
+      console.log("[DragEnd] Item foi solto fora do grid, removendo");
       api
         .put(`/characters/items/${draggingItem.id}/`, {
           PositionX: null,
@@ -93,6 +113,7 @@ function Inventory({ items, gridWidth, gridHeight }) {
           setDraggingItem(null);
         });
     } else {
+      console.log("[DragEnd] Item solto dentro do grid");
       setDraggingItem(null);
     }
   };
@@ -119,6 +140,7 @@ function Inventory({ items, gridWidth, gridHeight }) {
       );
     }
   }
+
   return (
     <div
       ref={inventoryRef}

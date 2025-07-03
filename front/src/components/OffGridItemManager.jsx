@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import api from '../apiAcess';
+import { useEffect, useState } from "react";
+import api from "../apiAcess";
+import "./styles/OffGridItemManager.css";
 
 function OffGridItemManager({ characterId }) {
   const [items, setItems] = useState([]);
@@ -10,16 +11,16 @@ function OffGridItemManager({ characterId }) {
   }, [characterId]);
 
   const fetchItems = () => {
-    api.get(`/characters/${characterId}/items/`)
-      .then(response => {
-        const offGrid = response.data.filter(item =>
-          item.character_sheet === parseInt(characterId) &&
-          (item.PositionX === null || item.PositionY === null)
+    api
+      .get(`/characters/${characterId}/items/`)
+      .then((response) => {
+        const offGrid = response.data.filter(
+          (item) => item.character_sheet === parseInt(characterId) && (item.PositionX === null || item.PositionY === null)
         );
         setItems(offGrid);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Erro ao buscar itens:", error);
         setLoading(false);
       });
@@ -27,12 +28,13 @@ function OffGridItemManager({ characterId }) {
 
   const handlePlaceAtZero = (id, itemBaseId, CharacterId) => {
     console.log("Colocando item no inventário:", id, itemBaseId, CharacterId);
-    api.put(`/characters/items/${id}/`, {
-      character_sheet: CharacterId,
-      item_base_id: itemBaseId,  // Corrigido o nome da chave
-      PositionX: 0,
-      PositionY: 0,
-    })
+    api
+      .put(`/characters/items/${id}/`, {
+        character_sheet: CharacterId,
+        item_base_id: itemBaseId, // Corrigido o nome da chave
+        PositionX: 0,
+        PositionY: 0,
+      })
       .then(() => {
         window.location.reload(); // Recarrega a página para atualizar o inventário
         //fetchItems(); // Atualiza sem recarregar a página
@@ -45,9 +47,10 @@ function OffGridItemManager({ characterId }) {
   const handleDeleteItem = (id) => {
     if (!window.confirm("Tem certeza que deseja deletar este item?")) return;
 
-    api.delete(`/characters/items/${id}/`)
+    api
+      .delete(`/characters/items/${id}/`)
       .then(() => {
-        setItems(prev => prev.filter(item => item.id !== id));
+        setItems((prev) => prev.filter((item) => item.id !== id));
       })
       .catch(() => {
         alert("Erro ao deletar item.");
@@ -61,23 +64,17 @@ function OffGridItemManager({ characterId }) {
   }
 
   return (
-    <div style={styles.container}>
+    <div className="offgrid-container">
       <h4>Itens fora da grade</h4>
       <ul>
-        {items.map(item => (
-          <li key={item.id} style={styles.item}>
+        {items.map((item) => (
+          <li key={item.id} className="offgrid-item">
             <span>{item.item_base.nameSquare}</span>
-            <div>
-              <button
-                onClick={() => handlePlaceAtZero(item.id, item.item_base.idSquare, item.character_sheet)}
-                style={{ ...styles.button, marginRight: '6px' }}
-              >
-                Posicionar no inventario 
+            <div className="offgrid-buttons">
+              <button className="offgrid-place" onClick={() => handlePlaceAtZero(item.id, item.item_base.idSquare, item.character_sheet)}>
+                Posicionar no inventário
               </button>
-              <button
-                onClick={() => handleDeleteItem(item.id)}
-                style={styles.deleteButton}
-              >
+              <button className="offgrid-delete" onClick={() => handleDeleteItem(item.id)}>
                 Deletar
               </button>
             </div>
@@ -87,36 +84,5 @@ function OffGridItemManager({ characterId }) {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    marginTop: '20px',
-    background: '#f7f7f7',
-    padding: '10px',
-    border: '1px solid #ccc',
-  },
-  item: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '8px',
-  },
-  button: {
-    padding: '4px 10px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  deleteButton: {
-    padding: '4px 10px',
-    backgroundColor: '#dc3545',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  }
-};
 
 export default OffGridItemManager;

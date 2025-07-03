@@ -1,7 +1,7 @@
 // front/src/components/ImagemInput.jsx
 "use client";
 
-import React, { useState, useEffect } from "react"; // Importe useState e useEffect
+import { useEffect, useState } from "react"; // Importe useState e useEffect
 import "../styles/ImagemInput.css";
 
 export default function ImageInput({ onChange, label }) {
@@ -14,7 +14,7 @@ export default function ImageInput({ onChange, label }) {
       const imageUrl = URL.createObjectURL(file);
       setPreviewImage(imageUrl);
       // Passa o objeto File para a função onChange do componente pai
-      onChange(file); 
+      onChange(file);
     } else {
       setPreviewImage(null); // Limpa a pré-visualização se nenhum arquivo for selecionado
       onChange(null); // Notifica o pai que nenhum arquivo foi selecionado
@@ -32,7 +32,9 @@ export default function ImageInput({ onChange, label }) {
   }, [previewImage]); // Executa a limpeza sempre que previewImage mudar
 
   return (
-    <div className="image-input-container"> {/* Container para agrupar o label e a miniatura */}
+    <div className="image-input-container">
+      {" "}
+      {/* Container para agrupar o label e a miniatura */}
       <label className="image-input-label">
         <span className="image-input-button">{label}</span>
         <input
@@ -42,15 +44,10 @@ export default function ImageInput({ onChange, label }) {
           className="image-input-hidden"
         />
       </label>
-
       {/* Renderiza a miniatura apenas se houver uma imagem para pré-visualizar */}
       {previewImage && (
         <div className="image-preview-wrapper">
-          <img 
-            src={previewImage} 
-            alt="Pré-visualização da imagem" 
-            className="image-preview" 
-          />
+          <img src={previewImage} alt="Pré-visualização da imagem" className="image-preview" />
         </div>
       )}
     </div>

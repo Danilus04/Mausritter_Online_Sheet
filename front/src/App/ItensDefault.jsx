@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import api from "../apiAcess";
 import Item from "../components/items/Items";
 import Menu from "../components/Menu";
+import Title from "../components/ui/Title";
 
 function ItensDefault() {
   const [itens, setItens] = useState([]);
@@ -145,7 +146,7 @@ function ItensDefault() {
 
   return (
     <div>
-      <h2>Itens da Ficha</h2>
+      <Title>Itens Da Ficha</Title>
       <div style={containerStyle}>
         {itens.length > 0 ? (
           itens.map((item) => (
@@ -203,7 +204,6 @@ function ItensDefault() {
                 } else {
                   alert(`Erro ao criar item: ${response.statusText}`);
                 }
-
               } catch (error) {
                 console.error("Falha na comunicação com o servidor:", error);
                 alert("Falha ao conectar com o servidor.");
