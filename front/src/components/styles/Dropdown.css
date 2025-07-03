@@ -3,6 +3,7 @@
   flex-direction: column;
   margin-bottom: 15px; /* Espaçamento entre os campos do formulário */
   width: 100%;
+  color: aqua;
 }
 
 .dropdown-label {
@@ -13,26 +14,17 @@
   text-align: left;
 }
 
-/* .dropdown-select {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
-  width: 100%;
-  box-sizing: border-box;
-  cursor: pointer;
-} */
-
 .dropdown-select {
   height: 40px;
   padding: 10px 15px;
   font-size: 16px;
   border: 2px solid #ccc;
   border-radius: 8px;
+  border-color: #696464;
   transition: border-color 0.3s ease;
   width: 94%;
+  background-color: #ddd;
+  color: #1c1c1cac;
 }
 
 /* Estilo para o dropdown de template, tornando-o maior e mais destacado */
@@ -42,12 +34,13 @@
   font-size: 16px;
   border: 2px solid #ccc;
   border-radius: 8px;
+  border-color: #696464;
   transition: border-color 0.3s ease;
   width: 46%;
 }
 
 .dropdown-select:focus {
   outline: none;
-  border-color: #007bff; /* Cor de destaque ao focar */
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  border-color: black;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25);
 }

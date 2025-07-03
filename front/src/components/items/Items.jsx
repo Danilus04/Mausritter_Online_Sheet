@@ -23,7 +23,11 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
     height: heightPx,
   };
 
-  const finalStyle = style ? style : defaultStyle;
+  const finalStyle = {
+    ...defaultStyle,
+    ...style,
+    backgroundColor: item.colorSquare || "#fff", // aplica a cor de fundo
+  };
 
   const maxUsos = Math.min(maxUsageSquare || 0, 9); // Limita no máximo 9
 
@@ -49,9 +53,7 @@ function Item({ item, onDragStart, onDragOver, onDrop, onDragEnd, onClick, cellS
         <div className="item-info-line">
           {typeSquare || "-"} | {damage1Square || "-"} | {damage2Square || "-"} | {valueArmorSquare || "-"} | {pesoSquare || "-"}
         </div>
-        <div className="item-image">
-          {imageSquare ? <img src={imageSquare} alt={nameSquare} /> : <span className="sem-imagem">[Sem imagem]</span>}
-        </div>
+        <div className="item-image">{imageSquare ? <img src={imageSquare} alt={nameSquare} /> : <span></span>}</div>
       </div>
     </div>
   );

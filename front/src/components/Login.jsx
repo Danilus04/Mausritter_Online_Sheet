@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './styles/Login.css';
-import api from '../apiAcess';
-import SubmitButton from "../components/ui/SubmitButton";
-import Spacer from "../components/ui/Spacer"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../apiAcess";
+import Spacer from "../components/ui/Spacer";
+import "./styles/Login.css";
+import SubmitButton from "./ui/Button";
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const irParaRegistro = () => {
     navigate("/register");
@@ -15,17 +15,17 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setMessage('Tentando login...');
+    setMessage("Tentando login...");
 
     try {
-      const response = await api.post('api/token/', { username, password });
+      const response = await api.post("api/token/", { username, password });
       if (response.status === 200) {
-      // Salve o token no localStorage ou context
-        localStorage.setItem('access', response.data.access);
-        localStorage.setItem('refresh', response.data.refresh);
+        // Salve o token no localStorage ou context
+        localStorage.setItem("access", response.data.access);
+        localStorage.setItem("refresh", response.data.refresh);
         setMessage(`Sucesso! Bem-vindo(a), ${username}!`);
         setTimeout(() => {
-          navigate('/ficha');
+          navigate("/ficha");
         }, 1000);
       } else {
         setMessage(`Erro: ${response.data.detail || response.data.message}`);
@@ -34,40 +34,32 @@ function Login() {
       if (error.response && error.response.data) {
         setMessage(`Erro: ${error.response.data.detail || error.response.data.message}`);
       } else {
-        setMessage('Não foi possível conectar ao servidor. Tente novamente mais tarde.');
+        setMessage("Não foi possível conectar ao servidor. Tente novamente mais tarde.");
       }
     }
-};
+  };
 
   return (
     <div className="container">
       <h2>Login para o Gerenciador de Fichas de Mausritter</h2>
       <form onSubmit={handleSubmit} className="form">
         <div className="formGroup">
-          <label htmlFor="username" className="label">Nome de Usuário:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="input"
-          />
+          <label htmlFor="username" className="label">
+            Nome de Usuário:
+          </label>
+          <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required className="input" />
         </div>
         <div className="formGroup">
-          <label htmlFor="password" className="label">Senha:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="input"
-          />
+          <label htmlFor="password" className="label">
+            Senha:
+          </label>
+          <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="input" />
         </div>
-        <button type="submit" className="button">Entrar</button>
+        <button type="submit" className="button">
+          Entrar
+        </button>
         <Spacer size={10} />
-        <SubmitButton label="Criar Conta" onClick={irParaRegistro}/>
+        <SubmitButton label="Criar Conta" onClick={irParaRegistro} />
       </form>
       {message && <p className="message">{message}</p>}
     </div>

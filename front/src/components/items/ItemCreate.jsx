@@ -2,17 +2,18 @@
 import { useState } from "react";
 import api from "../../apiAcess";
 import "../styles/ItemPage.css";
+import Button from "../ui/Button";
 import Dropdown from "../ui/Dropdown";
 import Input from "../ui/Input";
 import Spacer from "../ui/Spacer";
-import SubmitButton from "../ui/SubmitButton";
+import Title from "../ui/Title";
 import { templateOptions } from "./Item-form-options";
 import TemplateRenderer from "./template-render";
 
 export default function ItemCreationPage() {
   const [form, setForm] = useState({
     nameSquare: "",
-    colorSquare: "",
+    colorSquare: "#fff",
     widthSquare: 1,
     heightSquare: 1,
     descriptionSquare: "",
@@ -117,37 +118,49 @@ export default function ItemCreationPage() {
   };
 
   return (
-    <main className="item-form-container">
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <Dropdown
-            label="Template do Item"
-            value={template}
-            onChange={setTemplate}
-            options={templateOptions}
-            className="dropdown-template-style"
-          />
-          <Input placeholder="Nome do Item" value={form.nameSquare} onChange={(v) => handleChange("nameSquare", v)} />
-          <Input placeholder="Tag (para busca)" value={form.tagSquare} onChange={(v) => handleChange("tagSquare", v)} />
-          <Spacer size={10} />
+    <main>
+      <Title>Crie seu Item</Title>
+      <div className="item-form-container">
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <Dropdown
+              label="Template do Item"
+              value={template}
+              onChange={setTemplate}
+              options={templateOptions}
+              className="dropdown-template-style"
+            />
+            <Input placeholder="Nome do Item" value={form.nameSquare} onChange={(v) => handleChange("nameSquare", v)} />
+            <Input placeholder="Tag (para busca)" value={form.tagSquare} onChange={(v) => handleChange("tagSquare", v)} />
+            <Spacer size={10} />
 
-          <TemplateRenderer template={template} form={form} handleChange={handleChange} />
+            <TemplateRenderer template={template} form={form} handleChange={handleChange} />
 
-          <Spacer size={10} />
-          <Input placeholder="Valor (pips)" type="number" value={form.worthSquare} onChange={(v) => handleChange("worthSquare", +v)} />
-          <Input placeholder="Cor Predominante (ex: #c4a68a)" value={form.colorSquare} onChange={(v) => handleChange("colorSquare", v)} />
-          <Spacer size={20} />
+            <Spacer size={10} />
+            <Input placeholder="Valor (pips)" type="number" value={form.worthSquare} onChange={(v) => handleChange("worthSquare", +v)} />
+            <div className="color-input-wrapper">
+              <label className="color-label">Cor Predominante</label>
+              <div className="color-field">
+                <input type="color" value={form.colorSquare} onChange={(e) => handleChange("colorSquare", e.target.value)} />
+                <input
+                  type="text"
+                  value={form.colorSquare}
+                  onChange={(e) => handleChange("colorSquare", e.target.value)}
+                  placeholder="#c4a68a"
+                />
+                <div className="color-preview" style={{ backgroundColor: form.colorSquare }} />
+              </div>
+            </div>
 
-          <Input
-            placeholder="URL da Imagem"
-            value={form.imageSquare} // Já está no seu estado 'form'
-            onChange={(v) => handleChange("imageSquare", v)} // Usa a função 'handleChange' padrão
-          />
-          <Spacer size={20} />
+            <Spacer size={20} />
 
-          <SubmitButton label="Cadastrar Item" />
-        </div>
-      </form>
+            <Input placeholder="URL da Imagem" value={form.imageSquare} onChange={(v) => handleChange("imageSquare", v)} />
+            <Spacer size={20} />
+
+            <Button label="Cadastrar Item" />
+          </div>
+        </form>
+      </div>
     </main>
   );
 }
