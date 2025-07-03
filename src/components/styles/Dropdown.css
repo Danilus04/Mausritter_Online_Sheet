@@ -1,0 +1,46 @@
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; /* Espaçamento entre os campos do formulário */
+  width: 100%;
+  color: aqua;
+}
+
+.dropdown-label {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  text-align: left;
+}
+
+.dropdown-select {
+  height: 40px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  border-color: #696464;
+  transition: border-color 0.3s ease;
+  width: 94%;
+  background-color: #ddd;
+  color: #1c1c1cac;
+}
+
+/* Estilo para o dropdown de template, tornando-o maior e mais destacado */
+.dropdown-template-style .dropdown-select {
+  height: 40px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  border-color: #696464;
+  transition: border-color 0.3s ease;
+  width: 46%;
+}
+
+.dropdown-select:focus {
+  outline: none;
+  border-color: black;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25);
+}

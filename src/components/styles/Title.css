@@ -1,0 +1,22 @@
+/* src/styles/Title.css */
+
+.title-container {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  padding-top: 30px;
+}
+
+.title-container.centered {
+  text-align: center;
+}
+
+.title-text {
+  font-size: 1.8rem;
+  color: #333333;
+  font-weight: 700;
+}
+
+.ficha-itens {
+  /* margin-top: -130px; */
+  margin-bottom: 50px;
+}

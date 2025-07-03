@@ -1,0 +1,7 @@
+.inventory-grid {
+  border: 2px solid #333;
+  width: fit-content;
+  height: fit-content;
+  background-color: #eee;
+  position: relative;
+}
